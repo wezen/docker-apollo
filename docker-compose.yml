@@ -4,8 +4,6 @@ webapollo2:
    - db
   ports:
    - "8080:8080"
-  volumes:
-   - ./pyu_data:/data
   environment:
     WEBAPOLLO_DB_USERNAME: postgres
     WEBAPOLLO_DB_PASSWORD: password
