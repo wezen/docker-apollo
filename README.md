@@ -1,10 +1,10 @@
-# WebApollo 2.0
+# Apollo
 
 ![WebApollo Logo](http://gmod.org/mediawiki/images/thumb/4/4a/WebApolloLogo.png/400px-WebApolloLogo.png)
 
 From the [GMOD Wiki](http://gmod.org/wiki/WebApollo)
 
-> WebApollo is a browser-based tool for visualisation and editing of sequence
+> WebApollo2 is a browser-based tool for visualisation and editing of sequence
 > annotations. It is designed for distributed community annotation efforts,
 > where numerous people may be working on the same sequences in geographically
 > different locations; real-time updating keeps all users in sync during the
@@ -18,7 +18,7 @@ on a postgres image.
 
 ```yaml
 webapollo2:
-  build: .
+  image: erasche/webapollo2
   links:
    - db
   ports:
