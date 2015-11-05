@@ -1,5 +1,5 @@
 webapollo2:
-  build: .
+  image: erasche/webapollo2
   links:
    - db
   ports:
@@ -10,6 +10,9 @@ webapollo2:
     WEBAPOLLO_DB_DRIVER: "org.postgresql.Driver"
     WEBAPOLLO_DB_DIALECT: "org.hibernate.dialect.PostgresPlusDialect"
     WEBAPOLLO_DB_URI: "jdbc:postgresql://${DB_1_PORT_5432_TCP_ADDR}/postgres"
+    WEBAPOLLO_TRANSLATION_TABLE: 11
+  volumes:
+    - "./data:/data"
 db:
   image: postgres
   environment:
