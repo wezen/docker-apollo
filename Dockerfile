@@ -8,16 +8,14 @@ RUN apt-get -qq update --fix-missing && \
     apt-get --no-install-recommends -y install \
     git build-essential maven2 openjdk-7-jdk libpq-dev postgresql-common \
     postgresql-client xmlstarlet netcat libpng12-dev zlib1g-dev libexpat1-dev \
-    ant perl5
+    ant perl5 curl ssl-cert
 
 COPY sdkman.sh /bin/sdkman.sh
 RUN bash /bin/sdkman.sh
 
-ENV WA_VERSION 9d57916b3995c3af80425bf7021c1169153f7829
-RUN cd / && \
-    wget --quiet https://github.com/GMOD/Apollo/archive/${WA_VERSION}.tar.gz && \
-    tar xfz ${WA_VERSION}.tar.gz && \
-    mv /Apollo-* /apollo
+ENV WA_VERSION 589f414d8e056ec175e305add096019948f44d62
+RUN mkdir /apollo && \
+    curl -L https://github.com/GMOD/Apollo/archive/${WA_VERSION}.tar.gz | tar xzf - --strip-components=1 -C /apollo
 
 COPY build.sh /bin/build.sh
 RUN cp /apollo/sample-docker-apollo-config.groovy /apollo/apollo-config.groovy && \
