@@ -13,7 +13,7 @@ RUN apt-get -qq update --fix-missing && \
 COPY sdkman.sh /bin/sdkman.sh
 RUN bash /bin/sdkman.sh
 
-ENV WA_VERSION 9d57916b3995c3af80425bf7021c1169153f7829
+ENV WA_VERSION 2.0.1
 RUN cd / && \
     wget --quiet https://github.com/GMOD/Apollo/archive/${WA_VERSION}.tar.gz && \
     tar xfz ${WA_VERSION}.tar.gz && \
