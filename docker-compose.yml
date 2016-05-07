@@ -13,6 +13,7 @@ webapollo2:
     WEBAPOLLO_TRANSLATION_TABLE: 11
   volumes:
     - "./data:/data"
+#     - "/opt/apollo:/opt/apollo"
 db:
   image: postgres
   environment:
