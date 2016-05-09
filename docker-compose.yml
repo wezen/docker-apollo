@@ -1,5 +1,5 @@
 webapollo2:
-  image: erasche/webapollo2:2.0.1
+  image: nathandunn/apollo:2.0.2
   links:
    - db
   ports:
