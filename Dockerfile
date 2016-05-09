@@ -10,11 +10,11 @@ RUN apt-get -qq update --fix-missing && \
     postgresql-client xmlstarlet netcat libpng12-dev zlib1g-dev libexpat1-dev \
     ant perl5 curl ssl-cert
 
-COPY sdkman.sh /bin/sdkman.sh
-RUN bash /bin/sdkman.sh
+# COPY sdkman.sh /bin/sdkman.sh
+# RUN bash /bin/sdkman.sh
 
-ENV WA_VERSION f7381f3e4345ae421fb8647bf345b5f84d154c64
-RUN mkdir /apollo && \
+ENV WA_VERSION 4da76927f974f3e0f0ebf4be5f7b3bf49f8929d1
+RUN mkdir /apollo && mkdir /opt/apollo && \
     curl -L https://github.com/GMOD/Apollo/archive/${WA_VERSION}.tar.gz | tar xzf - --strip-components=1 -C /apollo
 
 COPY build.sh /bin/build.sh
