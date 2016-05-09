@@ -1,7 +1,7 @@
 # WebApollo
 # VERSION 2.0
 FROM tomcat:7
-MAINTAINER Eric Rasche <esr@tamu.edu>
+MAINTAINER Eric Rasche <esr@tamu.edu>, Nathan Dunn <nathandunn@lbl.gov>
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get -qq update --fix-missing && \
@@ -9,9 +9,6 @@ RUN apt-get -qq update --fix-missing && \
     git build-essential maven2 openjdk-7-jdk libpq-dev postgresql-common \
     postgresql-client xmlstarlet netcat libpng12-dev zlib1g-dev libexpat1-dev \
     ant perl5 curl ssl-cert
-
-# COPY sdkman.sh /bin/sdkman.sh
-# RUN bash /bin/sdkman.sh
 
 ENV WA_VERSION 4da76927f974f3e0f0ebf4be5f7b3bf49f8929d1
 RUN mkdir /apollo && mkdir /opt/apollo && \
