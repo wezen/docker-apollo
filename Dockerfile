@@ -11,7 +11,7 @@ RUN apt-get -qq update --fix-missing && \
     ant perl5 curl ssl-cert
 
 ENV WA_VERSION 4da76927f974f3e0f0ebf4be5f7b3bf49f8929d1
-RUN mkdir /apollo && mkdir /opt/apollo && \
+RUN mkdir /apollo && \
     curl -L https://github.com/GMOD/Apollo/archive/${WA_VERSION}.tar.gz | tar xzf - --strip-components=1 -C /apollo
 
 COPY build.sh /bin/build.sh
