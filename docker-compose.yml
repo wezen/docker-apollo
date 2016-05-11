@@ -2,10 +2,11 @@ version: '2'
 services:
   apollo:
     image: nathandunn/apollo:2.0.2
+#     build: .
     links:
-         - db
+      - db
     ports:
-         - "8080:8080"
+      - "8080:8080"
     environment:
       WEBAPOLLO_DB_USERNAME: postgres
       WEBAPOLLO_DB_PASSWORD: password
@@ -13,13 +14,8 @@ services:
       WEBAPOLLO_DB_DIALECT: "org.hibernate.dialect.PostgresPlusDialect"
       WEBAPOLLO_DB_URI: "jdbc:postgresql://db/postgres"
     volumes:
-      - data:/opt/apollo
       - "./data:/data"
   db:
     image: postgres
     environment:
       POSTGRES_PASSWORD: password
-volumes:
-  data:
-    external: true
-
