@@ -18,4 +18,4 @@ COPY build.sh /bin/build.sh
 RUN cp /apollo/sample-docker-apollo-config.groovy /apollo/apollo-config.groovy && \
     bash /bin/build.sh && \
     rm -rf ${CATALINA_HOME}/webapps/* && \
-    cp /apollo/target/apollo*.war ${CATALINA_HOME}/webapps/apollo.war
+    cp /apollo/target/apollo*.war ${CATALINA_HOME}/webapps/apollo.war 
