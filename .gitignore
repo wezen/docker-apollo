@@ -5,6 +5,7 @@
 
 # User-specific stuff:
 /.gitignore
+*.swp
 .idea/**
 .idea/workspace.xml
 .idea/tasks.xml
