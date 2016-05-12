@@ -8,29 +8,9 @@
 
 ## Running the Container
 
-The container is publicly available as `GMOD/apollo:2.0.2`. The recommended
+The container is publicly available as `gmod/apollo:stable`. The recommended
 method for launching the container is via docker-compose due to a dependency
-on a postgres image.
-
-```yaml
-webapollo2:
-  image: GMOD/apollo:stable
-  links:
-   - db
-  ports:
-   - "8080:8080"
-  environment:
-    WEBAPOLLO_DB_USERNAME: postgres
-    WEBAPOLLO_DB_PASSWORD: password
-    WEBAPOLLO_DB_DRIVER: "org.postgresql.Driver"
-    WEBAPOLLO_DB_DIALECT: "org.hibernate.dialect.PostgresPlusDialect"
-    WEBAPOLLO_DB_URI: "jdbc:postgresql://db/postgres"
-db:
-  image: postgres
-  environment:
-    POSTGRES_PASSWORD: password
-
-```
+on a postgres image.   
 
 There are a large number of environment variables that can be adjusted to suit your site's needs. These can be seen in the [apollo-config.groovy](https://github.com/GMOD/Apollo/blob/master/sample-docker-apollo-config.groovy) file.
 
