@@ -1,6 +1,6 @@
 # Apollo
 
-![WebApollo Logo](http://gmod.org/mediawiki/images/thumb/4/4a/WebApolloLogo.png/400px-WebApolloLogo.png)
+![Apollo Logo](https://github.com/GMOD/Apollo/blob/master/web-app/images/ApolloLogo_100x36.png)
 
 > Apollo is a browser-based tool for visualisation and editing of sequence annotations. It is designed for distributed community annotation efforts,
 > where numerous people may be working on the same sequences in geographically different locations; real-time updating keeps all users in sync during the
