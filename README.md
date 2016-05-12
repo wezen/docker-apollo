@@ -2,23 +2,19 @@
 
 ![WebApollo Logo](http://gmod.org/mediawiki/images/thumb/4/4a/WebApolloLogo.png/400px-WebApolloLogo.png)
 
-From the [GMOD Wiki](http://gmod.org/wiki/WebApollo)
-
-> WebApollo2 is a browser-based tool for visualisation and editing of sequence
-> annotations. It is designed for distributed community annotation efforts,
-> where numerous people may be working on the same sequences in geographically
-> different locations; real-time updating keeps all users in sync during the
+> Apollo is a browser-based tool for visualisation and editing of sequence annotations. It is designed for distributed community annotation efforts,
+> where numerous people may be working on the same sequences in geographically different locations; real-time updating keeps all users in sync during the
 > editing process.
 
 ## Running the Container
 
-The container is publicly available as `GMOD/apollo`. The recommended
+The container is publicly available as `GMOD/apollo:2.0.2`. The recommended
 method for launching the container is via docker-compose due to a dependency
 on a postgres image.
 
 ```yaml
 webapollo2:
-  image: erasche/webapollo2
+  image: GMOD/apollo:stable
   links:
    - db
   ports:
@@ -28,7 +24,7 @@ webapollo2:
     WEBAPOLLO_DB_PASSWORD: password
     WEBAPOLLO_DB_DRIVER: "org.postgresql.Driver"
     WEBAPOLLO_DB_DIALECT: "org.hibernate.dialect.PostgresPlusDialect"
-    WEBAPOLLO_DB_URI: "jdbc:postgresql://${DB_1_PORT_5432_TCP_ADDR}/postgres"
+    WEBAPOLLO_DB_URI: "jdbc:postgresql://db/postgres"
 db:
   image: postgres
   environment:
@@ -36,13 +32,10 @@ db:
 
 ```
 
-There are a large number of environment variables that can be adjusted to
-suit your site's needs. These can be seen in the
-[apollo-config.groovy](https://github.com/GMOD/Apollo/blob/master/sample-docker-apollo-config.groovy)
-file.
+There are a large number of environment variables that can be adjusted to suit your site's needs. These can be seen in the [apollo-config.groovy](https://github.com/GMOD/Apollo/blob/master/sample-docker-apollo-config.groovy) file.
 
 
-
+## Quickstart
 
 This procedure starts tomcat in a standard virtualized environment with a PostgreSQL database.
 
@@ -51,9 +44,9 @@ This procedure starts tomcat in a standard virtualized environment with a Postgr
 
 - Clone docker: ```git clone https://github.com/GMOD/docker-apollo.git```
 - ```cd docker-webapollo2```
-- copy JBrowse data into ```docker-webapollo2/data``` OR copy all files into a root level folder and above jbrowse tracks and link the name data or change the filename in the ```docker-compose.yml``` file.
+- copy JBrowse data into ```docker-apollo/data``` OR copy all files into a root level folder and above jbrowse tracks and link the name data or change the filename in the ```docker-compose.yml``` file.
 - ```docker-machine ls``` to get your IP
-- ```eval "$(docker-machine env default)”```  # this connects the shell to the machine!
+- ```eval "$(docker-machine env default)```  # this connects the shell to the machine!
 - ```docker-compose up -d```  # starts the service as a daemon
 - Connect to http://<docker-ip>:8080/apollo/ and confirm its working.  e.g., http://192.168.92.100:8080/apollo
 - Copy JBrowse directories into appropriate mounted docker volumes (see ```docker-compose.yml``` for mounted volumes).  

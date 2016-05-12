@@ -1,6 +1,7 @@
 version: '2'
 services:
   apollo:
+#     image: GMOD/apollo:2.0.2
     image: nathandunn/apollo:2.0.2
 #     build: .
     links:
