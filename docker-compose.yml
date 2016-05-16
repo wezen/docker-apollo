@@ -1,8 +1,7 @@
 version: '2'
 services:
   apollo:
-    image: gmod/apollo:stable
-#     build: .  # rebuild current docker image 
+    build: .
     links:
       - db
     ports:
