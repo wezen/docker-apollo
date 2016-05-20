@@ -25,8 +25,8 @@ This procedure starts tomcat in a standard virtualized environment with a Postgr
 
 - Install [docker](https://docs.docker.com/engine/installation/) for your system if not previously done.
 
-- Clone docker: `git clone https://github.com/erasche/docker-webapollo2.git`
-- `cd docker-webapollo2`
+- Clone docker: `git clone https://github.com/GMOD/docker-apollo`
+- `cd docker-apollo`
 - Copy JBrowse folders into ./data
 - `docker-compose up -d`  # starts the service as a daemon
 - Apollo will be shortly be available at [http://localhost:8080/apollo/](http://localhost:8080/apollo/)
