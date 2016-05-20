@@ -4,15 +4,20 @@ FROM tomcat:7
 MAINTAINER Eric Rasche <esr@tamu.edu>, Nathan Dunn <nathandunn@lbl.gov>
 ENV DEBIAN_FRONTEND noninteractive
 
+RUN mkdir /apollo && \ 
+    curl -L https://github.com/GMOD/Apollo/archive/master.tar.gz | tar xzf - --strip-components=1 -C /apollo
+
 RUN apt-get -qq update --fix-missing && \
     apt-get --no-install-recommends -y install \
     git build-essential maven2 openjdk-7-jdk libpq-dev postgresql-common \
     postgresql-client xmlstarlet netcat libpng12-dev zlib1g-dev libexpat1-dev \
-    ant perl5 curl ssl-cert
+    ant perl5 curl ssl-cert nodejs npm 
 
-ENV WA_VERSION 4da76927f974f3e0f0ebf4be5f7b3bf49f8929d1
-RUN mkdir /apollo && \
-    curl -L https://github.com/GMOD/Apollo/archive/${WA_VERSION}.tar.gz | tar xzf - --strip-components=1 -C /apollo
+RUN ln -s /usr/bin/nodejs /usr/bin/node && \  
+    npm install -g bower 
+
+# RUN cpan notest install Text::Markdown  # needed for apollo release
+
 
 COPY build.sh /bin/build.sh
 RUN cp /apollo/sample-docker-apollo-config.groovy /apollo/apollo-config.groovy && \
