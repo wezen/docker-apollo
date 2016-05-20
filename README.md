@@ -42,7 +42,7 @@ To bring down the container:
 
 - docker build . 
 - docker image # find <image ID>
-- docker tag <image ID> GMOD/docker-apollo#latest
+- docker tag <image ID> gmod/apollo:latest
 - docker login  --username=maryatdocker --email=mary@docker.com
-- docker push GMOD/docker-apollo#latest
+- docker push gmod/apollo:latest
 
