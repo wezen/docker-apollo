@@ -38,11 +38,8 @@ This procedure starts tomcat in a standard virtualized environment with a Postgr
 To bring down the container:
 - `docker-compose down`
 
-## Create to "latest" image
+## Create the "latest" image
 
-- docker build . 
-- docker image # find <image ID>
-- docker tag <image ID> gmod/apollo:latest
-- docker login  --username=maryatdocker --email=mary@docker.com
+- docker build -t gmod/apollo:latest .
+- docker login  --username=<username> --email=<email>
 - docker push gmod/apollo:latest
-
