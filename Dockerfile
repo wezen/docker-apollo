@@ -16,6 +16,7 @@ RUN ln -s /usr/bin/nodejs /usr/bin/node && \
     cp /usr/lib/jvm/java-7-openjdk-amd64/lib/tools.jar /usr/lib/jvm/java-7-openjdk-amd64/jre/lib/ext/tools.jar && \
     useradd -ms /bin/bash -d /apollo apollo
 
+# RUN cpan notest install Text::Markdown  # needed for apollo release
 ENV WEBAPOLLO_VERSION 75a81df7edc54f4a8e87c9836c9b7c9097d4e4a4
 RUN curl -L https://github.com/GMOD/Apollo/archive/${WEBAPOLLO_VERSION}.tar.gz | tar xzf - --strip-components=1 -C /apollo && \
     chown -R apollo:apollo /apollo
