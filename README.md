@@ -43,3 +43,4 @@ To bring down the container:
 - docker build -t gmod/apollo:latest .
 - docker login  --username=<username> --email=<email>
 - docker push gmod/apollo:latest
+
