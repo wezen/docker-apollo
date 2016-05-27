@@ -40,8 +40,6 @@ To bring down the container:
 
 ## Create the "latest" image
 
-- docker build .
-- docker image # find <image ID>
-- docker tag <image ID> gmod/apollo:latest
-- docker login  --username=maryatdocker --email=mary@docker.com
+- docker build -t gmod/apollo:latest .
+- docker login  --username=<username> --email=<email>
 - docker push gmod/apollo:latest
