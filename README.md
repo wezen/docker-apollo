@@ -42,9 +42,11 @@ To bring down the container:
 
 The default credentials in this image are:
 
---- | ---
-Username | `admin@local.host`
-Password | `password`
+| Credentials |                    |
+| ---         | ------------------ |
+| Username    | `admin@local.host` |
+| Password    | `password`         |
+
 
 ### Loading Data
 
