@@ -53,3 +53,10 @@ The default credentials in this image are:
 Some sample data is baked into the container for you to play around with:
 
 ![](./img/sample.png)
+
+### Chado
+
+Chado support is now baked into the GMOD docker container image. A chado
+container is part of the `docker-compose.yml` file and will be started on boot.
+You may wish to expose the postgres port (add a `ports: - 5432` to the
+docker-compose.yml) if you wish to talk to the Chado container.
