@@ -38,9 +38,16 @@ This procedure starts tomcat in a standard virtualized environment with a Postgr
 To bring down the container:
 - `docker-compose down`
 
-## Create the "latest" image
+### Logging In
 
-- docker build -t gmod/apollo:latest .
-- docker login  --username=<username> --email=<email>
-- docker push gmod/apollo:latest
+The default credentials in this image are:
 
+--- | ---
+Username | `admin@local.host`
+Password | `password`
+
+### Loading Data
+
+Some sample data is baked into the container for you to play around with:
+
+![](./img/sample.png)
