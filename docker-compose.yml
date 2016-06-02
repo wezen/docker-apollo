@@ -5,6 +5,7 @@ services:
     image: gmod/apollo:latest
     links:
       - db
+      - chado
     ports:
       - "8080:8080"
     environment:
@@ -13,9 +14,22 @@ services:
       WEBAPOLLO_DB_DRIVER: "org.postgresql.Driver"
       WEBAPOLLO_DB_DIALECT: "org.hibernate.dialect.PostgresPlusDialect"
       WEBAPOLLO_DB_URI: "jdbc:postgresql://db/postgres"
+      WEBAPOLLO_CHADO_DB_USERNAME: postgres
+      WEBAPOLLO_CHADO_DB_PASSWORD: password
+      WEBAPOLLO_CHADO_DB_DRIVER: "org.postgresql.Driver"
+      WEBAPOLLO_CHADO_DB_DIALECT: "org.hibernate.dialect.PostgresPlusDialect"
+      WEBAPOLLO_CHADO_DB_URI: "jdbc:postgresql://chado/postgres"
     volumes:
       - "./data:/data"
   db:
     image: postgres
     environment:
       POSTGRES_PASSWORD: password
+  chado:
+    image: erasche/chado:latest
+    environment:
+      - POSTGRES_PASSWORD=password
+      # The default chado image would try to install the schema on first run
+      #- INSTALL_CHADO_SCHEMA=0
+    volumes:
+      - /var/lib/postgresql/9.4/
