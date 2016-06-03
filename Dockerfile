@@ -17,18 +17,19 @@ RUN ln -s /usr/bin/nodejs /usr/bin/node && \
     useradd -ms /bin/bash -d /apollo apollo
 
 # RUN cpan notest install Text::Markdown  # needed for apollo release
-ENV WEBAPOLLO_VERSION e240e3ee35926a5dfc7c114d9304332dcfaa1da1
-RUN curl -L https://github.com/GMOD/Apollo/archive/${WEBAPOLLO_VERSION}.tar.gz | tar xzf - --strip-components=1 -C /apollo && \
-    chown -R apollo:apollo /apollo
+ENV WEBAPOLLO_VERSION 91c7d6301b03635635912c30dab073ef9f9ec112
+RUN curl -L https://github.com/GMOD/Apollo/archive/${WEBAPOLLO_VERSION}.tar.gz | tar xzf - --strip-components=1 -C /apollo
 
-USER apollo
 
 # RUN cpan notest install Text::Markdown  # needed for apollo release
 
 COPY build.sh /bin/build.sh
-RUN cp /apollo/sample-docker-apollo-config.groovy /apollo/apollo-config.groovy && \
-    bash /bin/build.sh
+ADD apollo-config.groovy /apollo/apollo-config.groovy
 
+RUN chown -R apollo:apollo /apollo
+USER apollo
+RUN bash /bin/build.sh
 USER root
+
 RUN rm -rf ${CATALINA_HOME}/webapps/* && \
     cp /apollo/target/apollo*.war ${CATALINA_HOME}/webapps/apollo.war
