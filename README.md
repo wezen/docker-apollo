@@ -38,9 +38,25 @@ This procedure starts tomcat in a standard virtualized environment with a Postgr
 To bring down the container:
 - `docker-compose down`
 
-## Create the "latest" image
+### Logging In
 
-- docker build -t gmod/apollo:latest .
-- docker login  --username=<username> --email=<email>
-- docker push gmod/apollo:latest
+The default credentials in this image are:
 
+| Credentials |                    |
+| ---         | ------------------ |
+| Username    | `admin@local.host` |
+| Password    | `password`         |
+
+
+### Loading Data
+
+Some sample data is baked into the container for you to play around with:
+
+![](./img/sample.png)
+
+### Chado
+
+Chado support is now baked into the GMOD docker container image. A chado
+container is part of the `docker-compose.yml` file and will be started on boot.
+You may wish to expose the postgres port (add a `ports: - 5432` to the
+docker-compose.yml) if you wish to talk to the Chado container.
