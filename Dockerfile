@@ -17,7 +17,7 @@ RUN ln -s /usr/bin/nodejs /usr/bin/node && \
     useradd -ms /bin/bash -d /apollo apollo
 
 # RUN cpan notest install Text::Markdown  # needed for apollo release
-ENV WEBAPOLLO_VERSION 7b6d1eac83fae1ee06bab7bfd2cf4f0e9dc443e8
+ENV WEBAPOLLO_VERSION 0b90c0bc0a869385cf20701cf96ab4f22aae6035
 RUN curl -L https://github.com/GMOD/Apollo/archive/${WEBAPOLLO_VERSION}.tar.gz | tar xzf - --strip-components=1 -C /apollo
 
 
