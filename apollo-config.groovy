@@ -99,7 +99,7 @@ apollo {
         [
             "name":"Remote User Authenticator",
             "className":"remoteUserAuthenticatorService",
-            "active":false,
+            "active":true,
             "params":[]
         ],
         [

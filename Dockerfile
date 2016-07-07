@@ -21,8 +21,7 @@ ENV WEBAPOLLO_VERSION fix_1042_security_v2
 RUN curl -L https://github.com/nathandunn/Apollo/archive/${WEBAPOLLO_VERSION}.tar.gz | tar xzf - --strip-components=1 -C /apollo
 
 
-# RUN cpan notest install Text::Markdown  # needed for apollo release
-
+RUN cpan notest install Text::Markdown  # needed for apollo release
 COPY build.sh /bin/build.sh
 ADD apollo-config.groovy /apollo/apollo-config.groovy
 
