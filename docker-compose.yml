@@ -1,5 +1,14 @@
 version: '2'
 services:
+  remote_user:
+    image: remote_user_proxy
+    links:
+      - apollo:target
+    ports:
+      - "80"
+    environment:
+      BACKEND_URL: "http://target:8080"
+      REMOTE_USER: esr@tamu.edu
   apollo:
     #build: .
     image: gmod/apollo:latest
