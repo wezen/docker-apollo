@@ -1,6 +1,6 @@
 
 
-[![Docker Tags](https://docs.docker.com/v1.5/img/nav/docker-logo-loggedin.png)](https://hub.docker.com/r/gmod/apollo/tags/) [![DOI](https://zenodo.org/badge/22018/GMOD/docker-apollo.svg)](https://zenodo.org/badge/latestdoi/22018/GMOD/docker-apollo) 
+[![Docker Tags](http://54.71.194.30:4015/img/nav/docker-logo-loggedin.png/)](https://hub.docker.com/r/gmod/apollo/tags/) [![DOI](https://zenodo.org/badge/22018/GMOD/docker-apollo.svg)](https://zenodo.org/badge/latestdoi/22018/GMOD/docker-apollo) 
 
 # Apollo
 
