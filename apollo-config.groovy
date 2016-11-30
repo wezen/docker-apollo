@@ -5,7 +5,7 @@ environments {
     }
     production {
         dataSource {
-            dbCreate = "create"
+            dbCreate = "update"
             username = "apollo"
             password = "apollo"
 
@@ -35,7 +35,7 @@ environments {
             }
         }
         dataSource_chado {
-            dbCreate = "create"
+            dbCreate = "update"
             username = "apollo"
             password = "apollo"
 
