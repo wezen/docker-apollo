@@ -32,8 +32,9 @@ RUN bash /bin/build.sh
 USER root
 
 RUN rm -rf ${CATALINA_HOME}/webapps/* && \
-	cp /apollo/target/apollo*.war ${CATALINA_HOME}/webapps/apollo.war
+    cp /apollo/target/apollo*.war /apollo.war
 
+ENV CONTEXT_PATH ROOT
 # Download chado schema
 RUN wget --quiet https://github.com/erasche/chado-schema-builder/releases/download/1.31-jenkins97/chado-1.31.sql.gz -O /chado.sql.gz && \
 	gunzip /chado.sql.gz

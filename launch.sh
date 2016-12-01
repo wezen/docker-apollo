@@ -1,4 +1,5 @@
-#1/bin/bash
+#!/bin/bash
+cp /apollo.war ${CATALINA_HOME}/webapps/${CONTEXT_PATH}.war
 pg_ctlcluster 9.4 main start
 
 until pg_isready; do
