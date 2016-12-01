@@ -25,7 +25,7 @@ This procedure starts tomcat in a standard virtualized environment with a Postgr
 
 - Install [docker](https://docs.docker.com/engine/installation/) for your system if not previously done.
 - `docker run -it -p 8080:8080 erasche/apollo:unified`
-- Apollo will be available at [http://localhost:8080/apollo/](http://localhost:8080/apollo/)
+- Apollo will be available at [http://localhost:8080/](http://localhost:8080/)
 
 ### Logging In
 
