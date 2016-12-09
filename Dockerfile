@@ -1,19 +1,24 @@
 # WebApollo
 # VERSION 2.0
-FROM tomcat:7
+FROM ubuntu:16.10
 MAINTAINER Eric Rasche <esr@tamu.edu>, Nathan Dunn <nathandunn@lbl.gov>
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get -qq update --fix-missing && \
 	apt-get --no-install-recommends -y install \
-	git build-essential maven2 openjdk-7-jdk libpq-dev postgresql-common \
-	postgresql postgresql-client xmlstarlet netcat libpng12-dev \
-	zlib1g-dev libexpat1-dev ant perl5 curl ssl-cert nodejs npm && \
+	git build-essential maven libpq-dev postgresql-common tomcat8 openjdk-8-jdk nodejs npm \
+	postgresql postgresql-client xmlstarlet netcat  \
+	zlib1g-dev libexpat1-dev ant curl ssl-cert && \
 	apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+#RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
+#    apt-get -qq update --fix-missing && \
+#	apt-get --no-install-recommends -y install \
+#	openjdk-8 nodejs    && \
 
 RUN ln -s /usr/bin/nodejs /usr/bin/node && \
 	npm install -g bower && \
-	cp /usr/lib/jvm/java-7-openjdk-amd64/lib/tools.jar /usr/lib/jvm/java-7-openjdk-amd64/jre/lib/ext/tools.jar && \
+	cp /usr/lib/jvm/java-8-openjdk-amd64/lib/tools.jar /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/tools.jar && \
 	useradd -ms /bin/bash -d /apollo apollo
 
 # RUN cpan notest install Text::Markdown  # needed for apollo release
