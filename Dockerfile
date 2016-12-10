@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get -qq update --fix-missing && \
 	apt-get --no-install-recommends -y install \
-	git build-essential maven libpq-dev postgresql-common tomcat8 openjdk-8-jdk nodejs npm \
+	git build-essential maven libpq-dev postgresql-common tomcat8 openjdk-8-jdk nodejs npm wget \
 	postgresql postgresql-client xmlstarlet netcat  \
 	zlib1g-dev libexpat1-dev ant curl ssl-cert && \
 	apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -31,6 +31,7 @@ RUN curl -L https://github.com/GMOD/Apollo/archive/${WEBAPOLLO_VERSION}.tar.gz |
 COPY build.sh /bin/build.sh
 ADD apollo-config.groovy /apollo/apollo-config.groovy
 
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 RUN chown -R apollo:apollo /apollo
 USER apollo
 RUN bash /bin/build.sh
