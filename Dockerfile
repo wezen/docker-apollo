@@ -38,6 +38,7 @@ RUN bash /bin/build.sh
 USER root
 
 ENV CONTEXT_PATH ROOT
+ENV CATALINA_HOME /var/lib/tomcat8
 
 RUN rm -rf ${CATALINA_HOME}/webapps/* 
 
