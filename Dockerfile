@@ -29,9 +29,11 @@ RUN curl -L https://github.com/GMOD/Apollo/archive/${WEBAPOLLO_VERSION}.tar.gz |
 # RUN cpan notest install Text::Markdown  # needed for apollo release
 
 ADD 1423_fix_auth.patch /apollo/1423_fix_auth.patch
+ADD 1445_auto_add_group.diff /apollo/1445_auto_add_group.diff
 
 RUN cd /apollo && \
     patch -p1 < 1423_fix_auth.patch && \
+    patch -p1 < 1445_auto_add_group.diff && \
 	./grailsw help && \
 	./gradlew help
 

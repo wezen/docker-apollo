@@ -4,6 +4,7 @@ environments {
     test {
     }
     production {
+        grails.assets.url = "/apollo/assets/"
         dataSource {
             dbCreate = "update"
             username = System.getenv("WEBAPOLLO_DB_USERNAME")
@@ -91,7 +92,7 @@ apollo {
             "name":"Remote User Authenticator",
             "className":"remoteUserAuthenticatorService",
             "active":true,
-            "params":[]
+            "params":["default_group": "annotators"]
         ],
         [
             "name":"Username Password Authenticator",
