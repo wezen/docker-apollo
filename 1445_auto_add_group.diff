@@ -27,21 +27,12 @@ index 34f5d2e..5b99e6c 100644
 @@ -17,6 +18,8 @@ import javax.servlet.http.HttpServletRequest
  @Transactional
  class RemoteUserAuthenticatorService implements AuthenticatorService {
- 
+
 +    def default_group
 +
      def authenticate(HttpServletRequest request) {
          User user
          UsernamePasswordToken authToken = new UsernamePasswordToken()
-@@ -33,7 +36,7 @@ class RemoteUserAuthenticatorService implements AuthenticatorService {
- //            } else {
- //            remoteUser = request.getHeader(FeatureStringEnum.REMOTE_USER.value)
- //            }
--            
-+
-             remoteUser = request.getHeader(FeatureStringEnum.REMOTE_USER.value)
-             log.warn "Remote user found [${remoteUser}]"
-             if (!remoteUser) {
 @@ -61,6 +64,22 @@ class RemoteUserAuthenticatorService implements AuthenticatorService {
                  log.debug "adding role: ${role}"
                  user.addToRoles(role)
