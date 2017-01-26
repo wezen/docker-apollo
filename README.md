@@ -27,6 +27,8 @@ This procedure starts tomcat in a standard virtualized environment with a Postgr
 $ docker run -it -p 8080:8080 quay.io/erasche/apollo:unified
 ```
 
+Apollo will be available at [http://localhost:8080/](http://localhost:8080/)
+
 ### Logging In
 
 The default credentials in this image are:
