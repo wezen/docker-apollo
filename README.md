@@ -21,12 +21,11 @@ file.
 
 ## Quickstart
 
-This procedure starts tomcat in a standard virtualized environment with a PostgreSQL database with [Chado](http://gmod.org/wiki/Introduction_to_Chado0).
+This procedure starts tomcat in a standard virtualized environment with a PostgreSQL database with [Chado](http://gmod.org/wiki/Introduction_to_Chado).
 
-- Install [docker](https://docs.docker.com/engine/installation/) for your system if not previously done.
-- `docker run -it -p 8080:8080 erasche/apollo:unified`
-- `docker run -it -v this-directory/data/:/data/ -p 8888:8080 gmod/apollo:stable`
-- Apollo will be available at http://machine-ip:8888/ (or 8080 if you don't figure the port)
+```console
+$ docker run -it -p 8080:8080 quay.io/erasche/apollo:unified
+```
 
 ### Logging In
 
