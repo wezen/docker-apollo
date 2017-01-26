@@ -1,20 +1,13 @@
 version: '2'
 services:
-  remote_user:
-    image: quay.io/erasche/remote_user_proxy
-    links:
-      - apollo:target
-    ports:
-      - "8080:80"
-    environment:
-      BACKEND_URL: "http://target:8080"
-      REMOTE_USER: admin@local.host
   apollo:
-    image: quay.io/erasche/apollo:remote_user
+    #image: quay.io/erasche/apollo:remote_user
+    image: apru
     links:
       - db
       - chado
     environment:
+      CONTEXT_PATH: galaxy/gxc_proxy/apollo
       WEBAPOLLO_DB_USERNAME: postgres
       WEBAPOLLO_DB_PASSWORD: password
       WEBAPOLLO_DB_DRIVER: "org.postgresql.Driver"
@@ -28,7 +21,7 @@ services:
     volumes:
       - "./data:/data"
   db:
-    image: postgres
+    image: postgres:9.5
     environment:
       POSTGRES_PASSWORD: password
   chado:
