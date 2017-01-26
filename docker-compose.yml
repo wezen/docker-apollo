@@ -5,7 +5,7 @@ services:
     links:
       - apollo:target
     ports:
-      - 8080:8080
+      - 8080:80
     environment:
       BACKEND_URL: "http://target:8080"
       REMOTE_USER: admin@local.host
