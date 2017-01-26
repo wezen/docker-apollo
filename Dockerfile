@@ -4,6 +4,7 @@ FROM tomcat:8-jre8
 MAINTAINER Eric Rasche <esr@tamu.edu>, Nathan Dunn <nathandunn@lbl.gov>
 ENV DEBIAN_FRONTEND noninteractive
 
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
 RUN apt-get -qq update --fix-missing && \
 	apt-get --no-install-recommends -y install \
 	git build-essential maven2 libpq-dev postgresql-common openjdk-8-jdk \
