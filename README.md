@@ -25,18 +25,10 @@ This procedure starts tomcat in a standard virtualized environment with a Postgr
 
 - Install [docker](https://docs.docker.com/engine/installation/) for your system if not previously done.
 
-- Clone docker: `git clone https://github.com/GMOD/docker-apollo`
-- `cd docker-apollo`
-- Copy JBrowse folders into ./data
-- `docker-compose up -d`  # starts the service as a daemon
-- Apollo will be shortly be available at [http://localhost:8080/apollo/](http://localhost:8080/apollo/)
-- Begin working with Apollo as usual. All directories in `data` are
-  accessible in the docker file-system at `/data/` when you add
-  directories. Other similarly exposed directories are `apollo` and
-  `jbrowse`.
-
-To bring down the container:
-- `docker-compose down`
+- Clone this repository: `git clone https://github.com/erasche/docker-apollo`
+- You will need to start the databases and wait for them to prepare themselves: `docker-compose up -d chado db`
+- Once chado is ready (watch `docker-compose logs -f`), you can launch the frontends: `docker-compose up -d apollo remote_user_proxy`
+- Apollo will be shortly be available at [http://localhost:8080/](http://localhost:8080/)
 
 ### Logging In
 
