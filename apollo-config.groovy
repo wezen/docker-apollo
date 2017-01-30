@@ -4,8 +4,8 @@ environments {
     test {
     }
     production {
+        grails.assets.url = System.getenv("APOLLO_ASSETS_PATH")
         grails.serverURL = System.getenv("APOLLO_SERVER_URL")
-        grails.assets.url = "/apollo/assets/"
         dataSource {
             dbCreate = "update"
             username = System.getenv("WEBAPOLLO_DB_USERNAME")
