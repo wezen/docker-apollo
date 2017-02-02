@@ -30,10 +30,12 @@ RUN curl -L https://github.com/GMOD/Apollo/archive/${WEBAPOLLO_VERSION}.tar.gz |
 
 ADD 1423_fix_auth.patch /apollo/1423_fix_auth.patch
 ADD 1445_auto_add_group.diff /apollo/1445_auto_add_group.diff
+ADD 1473_fix_remote_user.diff /apollo/1473_fix_remote_user.diff
 
 RUN cd /apollo && \
     patch -p1 < 1423_fix_auth.patch && \
     patch -p1 < 1445_auto_add_group.diff && \
+    patch -p1 < 1473_fix_remote_user.diff && \
 	./grailsw help && \
 	./gradlew help
 

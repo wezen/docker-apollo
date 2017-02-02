@@ -1,0 +1,136 @@
+diff --git a/grails-app/conf/Config.groovy b/grails-app/conf/Config.groovy
+index 38ad4e1..850158e 100644
+--- a/grails-app/conf/Config.groovy
++++ b/grails-app/conf/Config.groovy
+@@ -347,8 +347,8 @@ apollo {
+ 
+     authentications = [
+         ["name":"Username Password Authenticator",
+-         "className":"usernamePasswordAuthenticatorService",
+-         "active":true,
++            "className":"usernamePasswordAuthenticatorService",
++            "active":true,
+         ]
+         ,
+         ["name":"Remote User Authenticator",
+diff --git a/grails-app/conf/org/bbop/apollo/SecurityFilters.groovy b/grails-app/conf/org/bbop/apollo/SecurityFilters.groovy
+index 658a403..59886d5 100644
+--- a/grails-app/conf/org/bbop/apollo/SecurityFilters.groovy
++++ b/grails-app/conf/org/bbop/apollo/SecurityFilters.groovy
+@@ -30,6 +30,8 @@ class SecurityFilters {
+                         || controllerName == "cannedKey"
+                         || controllerName == "cannedValue"
+                         || controllerName == "cannedComment"
++                        || controllerName == "proxy"
++                        || controllerName == "featureType"
+                         || actionName == "report"
+                         || actionName == "loadLink"
+                 ) {
+@@ -37,10 +39,9 @@ class SecurityFilters {
+                         log.debug "apollo filter ${controllerName}::${actionName}"
+                         Subject subject = SecurityUtils.getSubject();
+                         if (!subject.isAuthenticated()) {
+-                            def req = request.JSON
+-                            def authToken = req.username ? new UsernamePasswordToken(req.username, req.password) : null
++
+                             // we don't try to add this here
+-                            if (authToken && permissionService.authenticateWithToken(authToken, request)) {
++                            if (permissionService.authenticateWithToken(request)) {
+                                 if (params.targetUri) {
+                                     redirect(uri: params.targetUri)
+                                 }
+diff --git a/grails-app/controllers/org/bbop/apollo/UserController.groovy b/grails-app/controllers/org/bbop/apollo/UserController.groovy
+index b72f136..0fd98a9 100644
+--- a/grails-app/controllers/org/bbop/apollo/UserController.groovy
++++ b/grails-app/controllers/org/bbop/apollo/UserController.groovy
+@@ -156,7 +156,7 @@ class UserController {
+                 authToken = new UsernamePasswordToken(username, password)
+             }
+ 
+-            if(permissionService.authenticateWithToken(authToken,request)){
++            if(permissionService.authenticateWithToken(request)){
+                 currentUser = permissionService.currentUser
+             }
+             else{
+diff --git a/grails-app/services/org/bbop/apollo/PermissionService.groovy b/grails-app/services/org/bbop/apollo/PermissionService.groovy
+index 04c7959..da76a7f 100644
+--- a/grails-app/services/org/bbop/apollo/PermissionService.groovy
++++ b/grails-app/services/org/bbop/apollo/PermissionService.groovy
+@@ -519,16 +519,17 @@ class PermissionService {
+         return findHighestOrganismPermissionForCurrentUser(organism).rank >= permissionEnum.rank
+     }
+ 
+-    def authenticateWithToken(UsernamePasswordToken usernamePasswordToken, HttpServletRequest request) {
++    def authenticateWithToken(UsernamePasswordToken usernamePasswordToken = null, HttpServletRequest request) {
+ 
+         def authentications = configWrapperService.authentications
++
+         for (auth in authentications) {
+             if (auth.active) {
+                 log.info "Authenticating with ${auth.className}"
+                 def authenticationService
+                 if("remoteUserAuthenticatorService" == auth.className ){
+                     authenticationService = remoteUserAuthenticatorService
+-                    if (auth.params.containsKey("default_group")) {
++                    if (auth?.params?.containsKey("default_group")) {
+                         authenticationService.setDefaultGroup(auth.params.get("default_group"))
+                     }
+                 }
+@@ -542,9 +543,14 @@ class PermissionService {
+                     return false
+                 }
+ 
+-                if(usernamePasswordToken){
+-                    if (authenticationService.authenticate(usernamePasswordToken, request)) {
+-                        log.info "Authenticated user ${usernamePasswordToken.username} using ${auth.name}"
++                if(authenticationService.requiresToken()){
++                    def req = request.JSON
++                    def authToken = usernamePasswordToken ?: null
++                    if(!authToken && req.username){
++                        authToken = new UsernamePasswordToken(req.username, req.password)
++                    }
++                    if (authenticationService.authenticate(authToken, request)) {
++                        log.info "Authenticated user ${authToken.username} using ${auth.name}"
+                         return true
+                     }
+                 }
+diff --git a/grails-app/services/org/bbop/apollo/authenticator/AuthenticatorService.groovy b/grails-app/services/org/bbop/apollo/authenticator/AuthenticatorService.groovy
+index 0f8eefc..62e48e0 100644
+--- a/grails-app/services/org/bbop/apollo/authenticator/AuthenticatorService.groovy
++++ b/grails-app/services/org/bbop/apollo/authenticator/AuthenticatorService.groovy
+@@ -12,4 +12,5 @@ interface AuthenticatorService {
+ 
+     def authenticate(HttpServletRequest request)
+     def authenticate(UsernamePasswordToken usernamePasswordToken,HttpServletRequest request)
++    Boolean requiresToken()
+ }
+\ No newline at end of file
+diff --git a/grails-app/services/org/bbop/apollo/authenticator/RemoteUserAuthenticatorService.groovy b/grails-app/services/org/bbop/apollo/authenticator/RemoteUserAuthenticatorService.groovy
+index 317db9f..cb9c0e9 100644
+--- a/grails-app/services/org/bbop/apollo/authenticator/RemoteUserAuthenticatorService.groovy
++++ b/grails-app/services/org/bbop/apollo/authenticator/RemoteUserAuthenticatorService.groovy
+@@ -113,4 +113,9 @@ class RemoteUserAuthenticatorService implements AuthenticatorService {
+     def setDefaultGroup(String defaultGroup) {
+         this.defaultGroup = defaultGroup
+     }
++
++    @Override
++    Boolean requiresToken() {
++        return false
++    }
+ }
+diff --git a/grails-app/services/org/bbop/apollo/authenticator/UsernamePasswordAuthenticatorService.groovy b/grails-app/services/org/bbop/apollo/authenticator/UsernamePasswordAuthenticatorService.groovy
+index 5d022c5..fd532dc 100644
+--- a/grails-app/services/org/bbop/apollo/authenticator/UsernamePasswordAuthenticatorService.groovy
++++ b/grails-app/services/org/bbop/apollo/authenticator/UsernamePasswordAuthenticatorService.groovy
+@@ -33,4 +33,10 @@ class UsernamePasswordAuthenticatorService implements AuthenticatorService{
+         }
+ 
+     }
++
++
++    @Override
++    Boolean requiresToken() {
++        return true
++    }
+ }
