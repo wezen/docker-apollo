@@ -1,10 +1,9 @@
 # WebApollo
 # VERSION 2.0
-FROM tomcat:8
-MAINTAINER Eric Rasche <esr@tamu.edu>
+FROM ubuntu:16.10
+MAINTAINER Eric Rasche <esr@tamu.edu>, Nathan Dunn <nathandunn@lbl.gov>
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
 RUN apt-get -qq update --fix-missing && \
 	apt-get --no-install-recommends -y install \
 	git build-essential maven libpq-dev postgresql-common tomcat8 openjdk-8-jdk nodejs npm wget \
@@ -12,13 +11,17 @@ RUN apt-get -qq update --fix-missing && \
 	zlib1g-dev libexpat1-dev ant curl ssl-cert && \
 	apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
+RUN apt-get -qq update --fix-missing && \
+	apt-get --no-install-recommends -y install npm
+
 RUN ln -s /usr/bin/nodejs /usr/bin/node && \
 	npm install -g bower && \
 	cp /usr/lib/jvm/java-8-openjdk-amd64/lib/tools.jar /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/tools.jar && \
 	useradd -ms /bin/bash -d /apollo apollo
 
 # RUN cpan notest install Text::Markdown  # needed for apollo release
-ENV WEBAPOLLO_VERSION ba55496a9b4ee3848f3699c08706f2617a10621a
+ENV WEBAPOLLO_VERSION f3b803c0b2e8e5436f9d9f40d482be61b6b415ea
 RUN curl -L https://github.com/GMOD/Apollo/archive/${WEBAPOLLO_VERSION}.tar.gz | tar xzf - --strip-components=1 -C /apollo
 
 
