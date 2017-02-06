@@ -1,5 +1,5 @@
 # WebApollo
-# VERSION 2.0
+# VERSION 2.0.6
 FROM tomcat:8-jre8
 MAINTAINER Anthony Bretaudeau <anthony.bretaudeau@inra.fr>, Eric Rasche <esr@tamu.edu>, Nathan Dunn <nathandunn@lbl.gov>
 ENV DEBIAN_FRONTEND noninteractive
@@ -21,21 +21,14 @@ RUN npm install -g bower && \
     useradd -ms /bin/bash -d /apollo apollo
 
 # RUN cpan notest install Text::Markdown  # needed for apollo release
-# 2.0.5
-ENV WEBAPOLLO_VERSION ba55496a9b4ee3848f3699c08706f2617a10621a
+# 2.0.6
+ENV WEBAPOLLO_VERSION ba0694195baf7094bc336ec3ca4b0227eca55c1b
 RUN curl -L https://github.com/GMOD/Apollo/archive/${WEBAPOLLO_VERSION}.tar.gz | tar xzf - --strip-components=1 -C /apollo
 
 
 # RUN cpan notest install Text::Markdown  # needed for apollo release
 
-ADD 1423_fix_auth.patch /apollo/1423_fix_auth.patch
-ADD 1445_auto_add_group.diff /apollo/1445_auto_add_group.diff
-ADD 1473_fix_remote_user.diff /apollo/1473_fix_remote_user.diff
-
 RUN cd /apollo && \
-    patch -p1 < 1423_fix_auth.patch && \
-    patch -p1 < 1445_auto_add_group.diff && \
-    patch -p1 < 1473_fix_remote_user.diff && \
 	./grailsw help && \
 	./gradlew help
 
