@@ -124,12 +124,12 @@ jbrowse {
         WebApollo{
             included = true
         }
-        NeatHTMLFeatures{
+        /*NeatHTMLFeatures{
             included = true
         }
         NeatCanvasFeatures{
             included = true
-        }
+        }*/
         RegexSequenceSearch{
             included = true
         }
