@@ -1,6 +1,8 @@
 # Apollo
 
 ![Apollo Logo](https://github.com/GMOD/Apollo/blob/master/web-app/images/ApolloLogo_100x36.png)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.268535.svg)](https://doi.org/10.5281/zenodo.268535)
+
 
 > Apollo is a browser-based tool for visualisation and editing of sequence
 > annotations. It is designed for distributed community annotation efforts,
