@@ -28,10 +28,10 @@ RUN curl -L https://github.com/GMOD/Apollo/archive/${WEBAPOLLO_VERSION}.tar.gz |
 
 # RUN cpan notest install Text::Markdown  # needed for apollo release
 
-ADD PR1492_ping.patch /apollo/PR1492_ping.patch
+ADD PR1492_ping.diff /apollo/PR1492_ping.diff
 
 RUN cd /apollo && \
-    patch -p1 < PR1492_ping.patch && \
+    patch -p1 < PR1492_ping.diff && \
 	./grailsw help && \
 	./gradlew help
 
