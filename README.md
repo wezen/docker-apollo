@@ -10,9 +10,10 @@
 
 ## Running the Container
 
-The container is publicly available as `gmod/apollo:stable`. The recommended
-method for launching the container is via docker-compose due to a dependency on
-a postgres image.
+The container is publicly available as `quay.io/erasche/apollo:remote_user`.
+
+The recommended method for launching the container is via docker-compose
+due to a dependency on a postgres image.
 
 There are a large number of environment variables that can be adjusted to suit
 your site's needs. These can be seen in the
@@ -21,14 +22,7 @@ file.
 
 ## Quickstart
 
-This procedure starts tomcat in a standard virtualized environment with a PostgreSQL database.
-
-- Install [docker](https://docs.docker.com/engine/installation/) for your system if not previously done.
-
-- Clone this repository: `git clone https://github.com/erasche/docker-apollo`
-- You will need to start the databases and wait for them to prepare themselves: `docker-compose up -d chado db`
-- Once chado is ready (watch `docker-compose logs -f`), you can launch the frontends: `docker-compose up -d apollo remote_user_proxy`
-- Apollo will be shortly be available at [http://localhost:8080/](http://localhost:8080/)
+`docker-compose up`
 
 ### Logging In
 
@@ -48,7 +42,4 @@ Some sample data is baked into the container for you to play around with:
 
 ### Chado
 
-Chado support is now baked into the GMOD docker container image. A chado
-container is part of the `docker-compose.yml` file and will be started on boot.
-You may wish to expose the postgres port (add a `ports: - 5432` to the
-docker-compose.yml) if you wish to talk to the Chado container.
+Chado support is now baked into the GMOD docker container image.

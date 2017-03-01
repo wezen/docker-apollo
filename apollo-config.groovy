@@ -80,6 +80,16 @@ apollo {
     feature_has_status = System.getenv("WEBAPOLLO_FEATURE_HAS_STATUS").equals("true")
     translation_table = "/config/translation_tables/ncbi_" + (System.getenv("WEBAPOLLO_TRANSLATION_TABLE") ?: "1") + "_translation_table.txt"
     get_translation_code = System.getenv("WEBAPOLLO_TRANSLATION_TABLE") ? System.getenv("WEBAPOLLO_TRANSLATION_TABLE").toInteger() : 1
+    user_pure_memory_store = true
+    is_partial_translation_allowed = false // unused so far
+    export_subfeature_attrs = true
+
+    // settings for Chado export
+    // set chado_export_fasta_for_sequence if you want the reference sequence FASTA to be exported into the database
+    // Note: Enabling this feature can be memory intensive
+    chado_export_fasta_for_sequence = true
+    // set chado_export_fasta_for_cds if you want the CDS FASTA to be exported into the database
+    chado_export_fasta_for_cds = false
 
     // TODO: should come from config or via preferences database
     splice_donor_sites = System.getenv("WEBAPOLLO_SPLICE_DONOR_SITES") ? System.getenv("WEBAPOLLO_SPLICE_DONOR_SITES").split(",") : ["GT"]
@@ -99,14 +109,12 @@ apollo {
         [
             "name":"Remote User Authenticator",
             "className":"remoteUserAuthenticatorService",
-            "active":true,
-            "params":[]
+            "active":true
         ],
         [
             "name":"Username Password Authenticator",
             "className":"usernamePasswordAuthenticatorService",
-            "active":true,
-            "params":[]
+            "active":true
         ]
     ]
 
@@ -115,18 +123,12 @@ apollo {
 jbrowse {
     git {
         url = "https://github.com/GMOD/jbrowse"
-        tag = "1.12.2-apollo"
+        tag = "99d8e6e1e7dfe290b839d41c18f41cf92d9afc7c"
         alwaysPull = true
         alwaysRecheck = true
     }
     plugins {
         WebApollo{
-            included = true
-        }
-        NeatHTMLFeatures{
-            included = true
-        }
-        NeatCanvasFeatures{
             included = true
         }
         RegexSequenceSearch{
@@ -135,9 +137,8 @@ jbrowse {
         HideTrackLabels{
             included = true
         }
-        // TODO
         GCContent{
-            git = 'https://github.com/cmdcolin/GCContent'
+            git = 'https://github.com/elsiklab/gccontent'
             branch = 'master'
             alwaysRecheck = "true"
             alwaysPull = "true"
