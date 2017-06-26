@@ -37,13 +37,13 @@ RUN curl -L https://github.com/GMOD/Apollo/archive/${WEBAPOLLO_VERSION}.tar.gz |
 #	./grailsw help && \
 #	./gradlew help
 
-RUN mv /root/.gradle/ /apollo/.gradle/ && \
-	mv /root/.grails/ /apollo/.grails/
+#RUN mv /root/.gradle/ /apollo/.gradle/ && \
+#	mv /root/.grails/ /apollo/.grails/
 
 COPY build.sh /bin/build.sh
 ADD apollo-config.groovy /apollo/apollo-config.groovy
 
-#ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 RUN chown -R apollo:apollo /apollo
 USER apollo
 RUN bash /bin/build.sh
