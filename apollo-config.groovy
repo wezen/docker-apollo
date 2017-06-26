@@ -4,14 +4,17 @@ environments {
     test {
     }
     production {
+//        grails.assets.url = System.getenv("APOLLO_PATH_PREFIX")   +"/assets/"
+//        grails.serverURL = System.getenv("APOLLO_BASE_HOST") + System.getenv("APOLLO_PATH_PREFIX")
+
         dataSource {
             dbCreate = "update"
-            username = "apollo"
-            password = "apollo"
+            username = System.getenv("WEBAPOLLO_DB_USERNAME") ?: "apollo"
+            password = System.getenv("WEBAPOLLO_DB_PASSWORD") ?: "apollo"
 
             driverClassName = "org.postgresql.Driver"
             dialect = "org.hibernate.dialect.PostgresPlusDialect"
-            url = "jdbc:postgresql://127.0.0.1/apollo"
+            url = System.getenv("WEBAPOLLO_DB_URI") ?: "jdbc:postgresql://127.0.0.1/apollo"
 
             properties {
                 // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
@@ -87,6 +90,23 @@ apollo {
     gff3.source = System.getenv("WEBAPOLLO_GFF3_SOURCE") ?: "."
 
     google_analytics = System.getenv("WEBAPOLLO_GOOGLE_ANALYTICS_ID") ?: ["UA-62921593-1"]
+
+//    authentications = [
+//        [
+//            "name":"Remote User Authenticator",
+//            "className":"remoteUserAuthenticatorService",
+//            "active":true,
+//            "params":["default_group": "annotators"]
+//        ],
+//        [
+//            "name":"Username Password Authenticator",
+//            "className":"usernamePasswordAuthenticatorService",
+//            "active":true,
+//            "params":[]
+//        ]
+//    ]
+
+    google_analytics = System.getenv("WEBAPOLLO_GOOGLE_ANALYTICS_ID")
 
     admin{
         username = System.getenv("APOLLO_ADMIN_EMAIL") ?: "admin@local.host"
