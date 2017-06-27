@@ -13,7 +13,7 @@ RUN apt-get -qq update --fix-missing && \
 
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
 RUN apt-get -qq update --fix-missing && \
-	apt-get --no-install-recommends -y install npm nodejs
+	apt-get --no-install-recommends -y install nodejs
 
 RUN ln -s /usr/bin/nodejs /usr/bin/node && \
 	npm install -g bower && \
