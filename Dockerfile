@@ -2,7 +2,7 @@
 # VERSION 2.0
 FROM tomcat:8-jre8
 MAINTAINER Eric Rasche <esr@tamu.edu>, Nathan Dunn <nathandunn@lbl.gov>, Anthony Bretaudeau <anthony.bretaudeau@inria.fr>
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND noninteractive 
 
 RUN apt-get -qq update --fix-missing && \
 	apt-get --no-install-recommends -y install \
