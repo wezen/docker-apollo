@@ -6,19 +6,16 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get -qq update --fix-missing && \
 	apt-get --no-install-recommends -y install \
-	git build-essential maven libpq-dev postgresql-common openjdk-8-jdk wget \
-	postgresql postgresql-client xmlstarlet netcat libpng12-dev \
+#	git build-essential maven libpq-dev postgresql-common openjdk-8-jdk wget \
+#	postgresql postgresql-client xmlstarlet netcat libpng12-dev \
+	git build-essential maven libpq-dev openjdk-8-jdk wget \
+	xmlstarlet netcat libpng12-dev \
 	zlib1g-dev libexpat1-dev ant curl ssl-cert && \
 	apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
 RUN apt-get -qq update --fix-missing && \
 	apt-get --no-install-recommends -y install nodejs
-
-#RUN ln -s /usr/bin/nodejs /usr/bin/node && \
-#	npm install -g bower && \
-#	cp /usr/lib/jvm/java-8-openjdk-amd64/lib/tools.jar /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/tools.jar && \
-#	useradd -ms /bin/bash -d /apollo apollo
 
 RUN npm install -g bower && \
 	cp /usr/lib/jvm/java-8-openjdk-amd64/lib/tools.jar /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/tools.jar && \
@@ -42,9 +39,9 @@ RUN rm -rf ${CATALINA_HOME}/webapps/* && \
 ENV CONTEXT_PATH ROOT
 
 # Download chado schema
-RUN wget --quiet https://github.com/erasche/chado-schema-builder/releases/download/1.31-jenkins97/chado-1.31.sql.gz -O /chado.sql.gz && \
-	gunzip /chado.sql.gz
-ADD user.sql /apollo/user.sql
+#RUN wget --quiet https://github.com/erasche/chado-schema-builder/releases/download/1.31-jenkins97/chado-1.31.sql.gz -O /chado.sql.gz && \
+#	gunzip /chado.sql.gz
+#ADD user.sql /apollo/user.sql
 
 ADD launch.sh /launch.sh
 CMD "/launch.sh"
