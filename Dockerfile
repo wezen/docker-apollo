@@ -31,7 +31,7 @@ USER apollo
 RUN bash /bin/build.sh
 USER root
 
-ENV CATALINA_HOME=/var/lib/tomcat8/
+ENV CATALINA_HOME=/usr/local/tomcat/
 RUN rm -rf ${CATALINA_HOME}/webapps/* && \
 	cp /apollo/target/apollo*.war /apollo.war
 
