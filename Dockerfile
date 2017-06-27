@@ -15,9 +15,12 @@ RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
 RUN apt-get -qq update --fix-missing && \
 	apt-get --no-install-recommends -y install nodejs
 
-RUN ln -s /usr/bin/nodejs /usr/bin/node && \
-	npm install -g bower && \
-	cp /usr/lib/jvm/java-8-openjdk-amd64/lib/tools.jar /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/tools.jar && \
+#RUN ln -s /usr/bin/nodejs /usr/bin/node && \
+#	npm install -g bower && \
+#	cp /usr/lib/jvm/java-8-openjdk-amd64/lib/tools.jar /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/tools.jar && \
+#	useradd -ms /bin/bash -d /apollo apollo
+
+RUN npm install -g bower && \
 	useradd -ms /bin/bash -d /apollo apollo
 
 ENV WEBAPOLLO_VERSION 7b304aac81f7dab77165f37bf210a6b3cb1b8080
