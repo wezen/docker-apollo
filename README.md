@@ -1,6 +1,6 @@
 # Apollo
 
-![Apollo Logo](https://github.com/GMOD/Apollo/blob/master/web-app/images/ApolloLogo_100x36.png)
+![Apollo Logo](https://github.com/GMOD/docker-apollo/raw/master/img/ApolloLogo_100x36.png)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.268535.svg)](https://doi.org/10.5281/zenodo.268535)
 
 
@@ -23,12 +23,14 @@ file.
 
 ## Quickstart
 
-This procedure starts tomcat in a standard virtualized environment with a PostgreSQL database with [Chado](http://gmod.org/wiki/Introduction_to_Chado0).
+This procedure starts tomcat in a standard virtualized environment with a PostgreSQL database with [Chado](http://gmod.org/wiki/Introduction_to_Chado).
 
 - Install [docker](https://docs.docker.com/engine/installation/) for your system if not previously done.
-- `docker run -it -p 8888:8080 gmod/apollo:stable`
+- `docker run -it -p 8888:8080 gmod/apollo:stable` # for a tested release
+- `docker run -it -p 8888:8080 gmod/apollo:latest` # for the latest
+- `docker run -it -p 8888:8080 gmod/apollo:apollo-only` # for the latest
 - `docker run -it -v this-directory/data/:/data/ -p 8888:8080 gmod/apollo:stable`
-- Apollo will be available at http://machine-ip:8888/ (or 8080 if you don't figure the port)
+- Apollo will be available at [http://localhost:8888/](http://localhost:8888/) (or 8888 if you don't configure the port)
 
 ### Logging In
 
