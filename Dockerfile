@@ -20,12 +20,13 @@ RUN apt-get -qq update --fix-missing && \
 #	cp /usr/lib/jvm/java-8-openjdk-amd64/lib/tools.jar /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/tools.jar && \
 #	useradd -ms /bin/bash -d /apollo apollo
 
-ENV WEBAPOLLO_VERSION 7b304aac81f7dab77165f37bf210a6b3cb1b8080
-RUN curl -L https://github.com/GMOD/Apollo/archive/${WEBAPOLLO_VERSION}.tar.gz | tar xzf - --strip-components=1 -C /apollo
-
 RUN npm install -g bower && \
 	cp /usr/lib/jvm/java-8-openjdk-amd64/lib/tools.jar /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/tools.jar && \
 	useradd -ms /bin/bash -d /apollo apollo
+
+ENV WEBAPOLLO_VERSION 7b304aac81f7dab77165f37bf210a6b3cb1b8080
+RUN curl -L https://github.com/GMOD/Apollo/archive/${WEBAPOLLO_VERSION}.tar.gz | tar xzf - --strip-components=1 -C /apollo
+
 
 COPY build.sh /bin/build.sh
 ADD apollo-config.groovy /apollo/apollo-config.groovy
