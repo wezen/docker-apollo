@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 service postgresql start 
 
-echo "Starting tomcat with $CATALINA_HOME"
 
 
 #!/bin/bash
@@ -22,6 +21,7 @@ export CATALINA_HOME=/usr/local/tomcat/
 FIXED_CTX=$(echo "${CONTEXT_PATH}" | sed 's|/|#|g')
 WAR_FILE=${CATALINA_HOME}/webapps/${FIXED_CTX}.war
 
+echo "Starting tomcat with $CATALINA_HOME"
 $CATALINA_HOME/bin/shutdown.sh
 $CATALINA_HOME/bin/startup.sh
 
