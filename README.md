@@ -26,11 +26,15 @@ file.
 This procedure starts tomcat in a standard virtualized environment with a PostgreSQL database with [Chado](http://gmod.org/wiki/Introduction_to_Chado).
 
 - Install [docker](https://docs.docker.com/engine/installation/) for your system if not previously done.
-- `docker run -it -p 8888:8080 gmod/apollo:stable` # for a tested release
+- `docker run -it -p 8888:8080 gmod/apollo:2.0.6` # for a tested release
 - `docker run -it -p 8888:8080 gmod/apollo:latest` # for the latest
-- `docker run -it -p 8888:8080 gmod/apollo:apollo-only` # for the latest
-- `docker run -it -v this-directory/data/:/data/ -p 8888:8080 gmod/apollo:stable`
+- `docker run -it -p 8888:8080 gmod/apollo:apollo-only` # from apollo only (no postgresql)
+- `docker run -it -v /jbrowse/root/directory/:/data -p 8888:8080 gmod/apollo:latest`
+- `docker run -it -v /jbrowse/root/directory/:/data  -p 8888:8080 quay.io/gmod/docker-apollo` # built by quay.io
 - Apollo will be available at [http://localhost:8888/](http://localhost:8888/) (or 8888 if you don't configure the port)
+
+When you use the above mount directory ```/jbrowse/root/directory``` and your genome is in 
+```/jbrowse/root/directory/myawesomegenome``` you'll point to the directory: ```/data/myawesomegenome```.
 
 ### Logging In
 
