@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 service postgresql start 
-service tomcat8 start 
+
+echo "Starting tomcat with $CATALINA_HOME"
+
+$CATALINA_HOME/bin/startup.sh 
 
 #!/bin/bash
 until pg_isready; do
