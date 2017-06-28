@@ -1,13 +1,11 @@
 # WebApollo
 # VERSION 2.0
 FROM tomcat:8-jre8
-MAINTAINER Eric Rasche <esr@tamu.edu>, Nathan Dunn <nathandunn@lbl.gov>, Anthony Bretaudeau <anthony.bretaudeau@inria.fr>
+MAINTAINER Eric Rasche <esr@tamu.edu>, Anthony Bretaudeau <anthony.bretaudeau@inria.fr>, Nathan Dunn <nathandunn@lbl.gov>
 ENV DEBIAN_FRONTEND noninteractive 
 
 RUN apt-get -qq update --fix-missing && \
 	apt-get --no-install-recommends -y install \
-#	git build-essential maven libpq-dev postgresql-common openjdk-8-jdk wget \
-#	postgresql postgresql-client xmlstarlet netcat libpng12-dev \
 	git build-essential maven libpq-dev openjdk-8-jdk wget \
 	xmlstarlet netcat libpng12-dev \
 	zlib1g-dev libexpat1-dev ant curl ssl-cert
@@ -33,15 +31,11 @@ USER apollo
 RUN bash /bin/build.sh
 USER root
 
+ENV CATALINA_HOME=/usr/local/tomcat/
 RUN rm -rf ${CATALINA_HOME}/webapps/* && \
-	cp /apollo/target/apollo*.war /apollo.war
+	cp /apollo/target/apollo*.war ${CATALINA_HOME}/apollo.war
 
 ENV CONTEXT_PATH ROOT
-
-# Download chado schema
-#RUN wget --quiet https://github.com/erasche/chado-schema-builder/releases/download/1.31-jenkins97/chado-1.31.sql.gz -O /chado.sql.gz && \
-#	gunzip /chado.sql.gz
-#ADD user.sql /apollo/user.sql
 
 ADD launch.sh /launch.sh
 CMD "/launch.sh"
