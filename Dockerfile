@@ -45,3 +45,4 @@ ADD user.sql /apollo/user.sql
 ADD launch.sh /launch.sh
 CMD "/launch.sh"
 
+
