@@ -71,7 +71,7 @@ apollo {
     default_minimum_intron_size = System.getenv("WEBAPOLLO_MINIMUM_INTRON_SIZE") ? System.getenv("WEBAPOLLO_MINIMUM_INTRON_SIZE").toInteger() : 1
     history_size = System.getenv("WEBAPOLLO_HISTORY_SIZE") ? System.getenv("WEBAPOLLO_HISTORY_SIZE").toInteger() : 0
     overlapper_class = System.getenv("WEBAPOLLO_OVERLAPPER_CLASS") ?: "org.bbop.apollo.sequence.OrfOverlapper"
-    use_cds_for_new_transcripts = System.getenv("WEBAPOLLO_CDS_FOR_NEW_TRANSCRIPTS") // will default to false
+    use_cds_for_new_transcripts = System.getenv("WEBAPOLLO_CDS_FOR_NEW_TRANSCRIPTS").equals("true") // will default to false
     feature_has_dbxrefs = System.getenv("WEBAPOLLO_FEATURE_HAS_DBXREFS") ?: true
     feature_has_attributes = System.getenv("WEBAPOLLO_FEATURE_HAS_ATTRS") ?: true
     feature_has_pubmed_ids = System.getenv("WEBAPOLLO_FEATURE_HAS_PUBMED") ?: true
@@ -106,10 +106,10 @@ jbrowse {
             included = true
         }
         NeatHTMLFeatures{
-            included = true
+            included = System.getenv("WEBAPOLLO_JBROWSE_PLUGIN_NEATHTML") ?: true
         }
         NeatCanvasFeatures{
-            included = true
+            included = System.getenv("WEBAPOLLO_JBROWSE_PLUGIN_NEATCANVAS") ?: true
         }
         RegexSequenceSearch{
             included = true
