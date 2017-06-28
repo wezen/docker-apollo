@@ -1,7 +1,7 @@
 version: '2'
 services:
   apollo:
-    image: quay.io/erasche/apollo:latest
+    image: quay.io/erasche/apollo:alpine
     links:
       - db
       - chado
