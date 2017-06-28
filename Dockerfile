@@ -1,7 +1,7 @@
 # WebApollo
 # VERSION 2.0
 FROM tomcat:8-jre8
-MAINTAINER Eric Rasche <esr@tamu.edu>, Nathan Dunn <nathandunn@lbl.gov>, Anthony Bretaudeau <anthony.bretaudeau@inria.fr>
+MAINTAINER Eric Rasche <esr@tamu.edu>, Anthony Bretaudeau <anthony.bretaudeau@inria.fr>, Nathan Dunn <nathandunn@lbl.gov>
 ENV DEBIAN_FRONTEND noninteractive 
 
 RUN apt-get -qq update --fix-missing && \
@@ -33,7 +33,7 @@ USER root
 
 ENV CATALINA_HOME=/usr/local/tomcat/
 RUN rm -rf ${CATALINA_HOME}/webapps/* && \
-	cp /apollo/target/apollo*.war /apollo.war
+	cp /apollo/target/apollo*.war ${CATALINA_HOME}/apollo.war
 
 ENV CONTEXT_PATH ROOT
 
