@@ -6,12 +6,12 @@ environments {
     production {
         dataSource {
             dbCreate = "update"
-            username = "apollo"
-            password = "apollo"
+            username = System.getenv("WEBAPOLLO_DB_USERNAME")
+            password = System.getenv("WEBAPOLLO_DB_PASSWORD")
 
             driverClassName = "org.postgresql.Driver"
             dialect = "org.hibernate.dialect.PostgresPlusDialect"
-            url = "jdbc:postgresql://127.0.0.1/apollo"
+            url = System.getenv("WEBAPOLLO_DB_URI")
 
             properties {
                 // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
@@ -36,12 +36,12 @@ environments {
         }
         dataSource_chado {
             dbCreate = "update"
-            username = "apollo"
-            password = "apollo"
+            username = System.getenv("WEBAPOLLO_CHADO_DB_USERNAME")
+            password = System.getenv("WEBAPOLLO_CHADO_DB_PASSWORD")
 
             driverClassName = "org.postgresql.Driver"
             dialect = "org.hibernate.dialect.PostgresPlusDialect"
-            url = "jdbc:postgresql://127.0.0.1/chado"
+            url = System.getenv("WEBAPOLLO_CHADO_DB_URI")
 
             properties {
                 // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
@@ -99,18 +99,12 @@ apollo {
 jbrowse {
     git {
         url = "https://github.com/GMOD/jbrowse"
-        tag = "1.12.2-apollo"
+        tag = "1.12.3-apollo"
         alwaysPull = true
         alwaysRecheck = true
     }
     plugins {
         WebApollo{
-            included = true
-        }
-        NeatHTMLFeatures{
-            included = true
-        }
-        NeatCanvasFeatures{
             included = true
         }
         RegexSequenceSearch{
@@ -119,9 +113,8 @@ jbrowse {
         HideTrackLabels{
             included = true
         }
-        // TODO
-        GCContent{
-            git = 'https://github.com/cmdcolin/GCContent'
+        GCContent {
+            git = 'https://github.com/elsiklab/gccontent'
             branch = 'master'
             alwaysRecheck = "true"
             alwaysPull = "true"
