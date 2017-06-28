@@ -33,7 +33,7 @@ USER root
 
 ENV CATALINA_HOME=/usr/local/tomcat/
 RUN rm -rf ${CATALINA_HOME}/webapps/* && \
-	cp /apollo/target/apollo*.war ${CATALINA_HOME}/apollo.war
+	cp /apollo/apollo*.war ${CATALINA_HOME}/apollo.war
 
 ENV CONTEXT_PATH ROOT
 
