@@ -1,5 +1,7 @@
 #!/bin/bash
 set -ex
+# Doubly set, because reasons.
+export JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk/jre
 
 cd /apollo/ && \
 	./apollo deploy && \
