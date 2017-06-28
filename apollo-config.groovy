@@ -99,7 +99,7 @@ apollo {
 jbrowse {
     git {
         url = "https://github.com/GMOD/jbrowse"
-        tag = "1.12.3-apollo"
+        tag = "1.12.2-apollo"
         alwaysPull = true
         alwaysRecheck = true
     }
