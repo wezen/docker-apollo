@@ -39,3 +39,4 @@ ENV CONTEXT_PATH ROOT
 
 ADD launch.sh /launch.sh
 CMD "/launch.sh"
+
