@@ -11,7 +11,7 @@ environments {
 
             driverClassName = "org.postgresql.Driver"
             dialect = "org.hibernate.dialect.PostgresPlusDialect"
-            url = System.getenv("WEBAPOLLO_DB_URI") ?: "jdbc:postgresql://127.0.0.1/apollo"
+            url = "jdbc:postgresql://${System.getenv("WEBAPOLLO_DB_HOST")?:"127.0.0.1"}/${System.getenv("WEBAPOLLO_DB_NAME")?:"chado"}"
 
             properties {
                 // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
@@ -36,12 +36,13 @@ environments {
         }
         dataSource_chado {
             dbCreate = "update"
-            username = "apollo"
-            password = "apollo"
+            username = System.getenv("CHADO_DB_USERNAME") ?: "apollo"
+            password = System.getenv("CHADO_DB_PASSWORD") ?: "apollo"
 
             driverClassName = "org.postgresql.Driver"
             dialect = "org.hibernate.dialect.PostgresPlusDialect"
-            url = "jdbc:postgresql://127.0.0.1/chado"
+
+            url = "jdbc:postgresql://${System.getenv("CHADO_DB_HOST")?:"127.0.0.1"}/${System.getenv("CHADO_DB_NAME")?:"chado"}"
 
             properties {
                 // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
