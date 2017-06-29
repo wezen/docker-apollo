@@ -10,9 +10,8 @@
 
 ## Running the Container
 
-The container is publicly available as `gmod/apollo:stable`. The recommended
-method for launching the container is via docker-compose due to a dependency on
-a postgres image.
+The container is publicly available as `quay.io/erasche/apollo:latest`. The recommended
+method for launching the container is via docker-compose.
 
 There are a large number of environment variables that can be adjusted to suit
 your site's needs. These can be seen in the
@@ -20,8 +19,6 @@ your site's needs. These can be seen in the
 file.
 
 ## Quickstart
-
-This procedure starts tomcat in a standard virtualized environment with a PostgreSQL database with [Chado](http://gmod.org/wiki/Introduction_to_Chado).
 
 ```console
 $ docker run -it -p 8080:8080 quay.io/erasche/apollo:unified
