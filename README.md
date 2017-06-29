@@ -27,7 +27,7 @@ This procedure starts tomcat in a standard virtualized environment with a Postgr
 
 - Install [docker](https://docs.docker.com/engine/installation/) for your system if not previously done.
 - `docker run -it -p 8888:8080 gmod/apollo:2.0.6` # for a tested release
-- `docker run -it -p 8888:8080 gmod/apollo:latest` # for the latest
+- `docker run -it -p 8888:8080 gmod/apollo:latest` # for the latest, remember to ```docker pull gmod/apollo``` to fetch newer versions
 - `docker run -it -p 8888:8080 gmod/apollo:apollo-only` # from apollo only (no postgresql)
 - `docker run -it -v /jbrowse/root/directory/:/data -p 8888:8080 gmod/apollo:latest`
 - `docker run -it -v /jbrowse/root/directory/:/data  -p 8888:8080 quay.io/gmod/docker-apollo` # built by quay.io
