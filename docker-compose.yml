@@ -1,7 +1,7 @@
 version: '2'
 services:
   apollo:
-    image: quay.io/erasche/apollo:latest
+    image: quay.io/erasche/apollo:alpine
     links:
       - db
       - chado
@@ -13,19 +13,12 @@ services:
       WEBAPOLLO_DB_PASSWORD: password
       WEBAPOLLO_DB_DRIVER: "org.postgresql.Driver"
       WEBAPOLLO_DB_DIALECT: "org.hibernate.dialect.PostgresPlusDialect"
-      WEBAPOLLO_DB_URI: "jdbc:postgresql://db/postgres"
+      WEBAPOLLO_DB_URI: "jdbc:postgresql://db:5432/postgres"
       WEBAPOLLO_CHADO_DB_USERNAME: postgres
       WEBAPOLLO_CHADO_DB_PASSWORD: password
       WEBAPOLLO_CHADO_DB_DRIVER: "org.postgresql.Driver"
       WEBAPOLLO_CHADO_DB_DIALECT: "org.hibernate.dialect.PostgresPlusDialect"
-      WEBAPOLLO_CHADO_DB_URI: "jdbc:postgresql://chado/postgres"
-      # Optional, allow image to 'wait'
-      WEBAPOLLO_DB_HOST: db
-      WEBAPOLLO_DB_PORT: 5432
-      WEBAPOLLO_DB_NAME: postgres
-      WEBAPOLLO_CHADO_DB_HOST: chado
-      WEBAPOLLO_CHADO_DB_PORT: 5432
-      WEBAPOLLO_CHADO_DB_NAME: postgres
+      WEBAPOLLO_CHADO_DB_URI: "jdbc:postgresql://chado:5432/postgres"
     volumes:
       - "./data:/data"
   db:

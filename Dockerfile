@@ -1,32 +1,25 @@
 # WebApollo
 # VERSION 2.0
-FROM tomcat:8-jre8
+FROM tomcat:8.5-jre8-alpine
 MAINTAINER Eric Rasche <esr@tamu.edu>
-ENV DEBIAN_FRONTEND noninteractive
-
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
-RUN apt-get -qq update --fix-missing && \
-	apt-get --no-install-recommends -y install \
-	git build-essential maven2 libpq-dev postgresql-common openjdk-8-jdk wget \
-	postgresql-client xmlstarlet netcat libpng12-dev zlib1g-dev libexpat1-dev \
-	ant curl ssl-cert nodejs && \
-	apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-RUN npm install -g bower && \
-	cp /usr/lib/jvm/java-8-openjdk-amd64/lib/tools.jar /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/tools.jar && \
-	useradd -ms /bin/bash -d /apollo apollo
-
-# 2.0.6+
-ENV WEBAPOLLO_VERSION b67f41739467a11dbec410f592af4460b767f56e
-RUN curl -L https://github.com/GMOD/Apollo/archive/${WEBAPOLLO_VERSION}.tar.gz | tar xzf - --strip-components=1 -C /apollo
 
 COPY build.sh /bin/build.sh
 ADD apollo-config.groovy /apollo/apollo-config.groovy
+ENV WEBAPOLLO_VERSION b67f41739467a11dbec410f592af4460b767f56e
 
-RUN chown -R apollo:apollo /apollo
-USER apollo
-RUN bash /bin/build.sh
-USER root
+RUN apk update && \
+	apk add --update tar && \
+	apk add curl ca-certificates bash nodejs git postgresql-client maven libpng \
+		make g++ zlib-dev expat-dev nodejs-npm sudo && \
+	npm install -g bower && \
+	adduser -s /bin/bash -D -h /apollo apollo && \
+	curl -L https://github.com/GMOD/Apollo/archive/${WEBAPOLLO_VERSION}.tar.gz | \
+	tar xzf - --strip-components=1 -C /apollo && \
+	chown -R apollo:apollo /apollo && \
+	apk add openjdk8 openjdk8-jre && \
+	cp /usr/lib/jvm/java-1.8-openjdk/lib/tools.jar /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/tools.jar && \
+	sudo -u apollo /bin/build.sh && \
+	apk del curl bash nodejs git libpng make g++ nodejs-npm openjdk8 sudo
 
 ENV CONTEXT_PATH ROOT
 ADD launch.sh /launch.sh
