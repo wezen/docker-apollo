@@ -9,6 +9,7 @@ ENV WEBAPOLLO_VERSION b67f41739467a11dbec410f592af4460b767f56e
 
 RUN apk update && \
 	apk add --update tar && \
+	# TODO: replace postgresql with a smaller pg_isready
 	apk add curl ca-certificates bash nodejs git postgresql postgresql-client \
 		maven libpng make g++ zlib-dev expat-dev nodejs-npm sudo && \
 	npm install -g bower && \
