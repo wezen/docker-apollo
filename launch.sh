@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 service postgresql start 
 
-
-
-#!/bin/bash
 until pg_isready; do
 	echo -n "."
 	sleep 1;
