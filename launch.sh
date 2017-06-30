@@ -11,36 +11,18 @@ done
 
 echo "Postgres is up, loading chado"
 
-if [[ "${WEBAPOLLO_DB_HOST}" == "" ]]; then
-	WEBAPOLLO_DB_HOST=127.0.0.1
-fi
-if [[ "${WEBAPOLLO_DB_NAME}" == "" ]]; then
-	WEBAPOLLO_DB_NAME=apollo
-fi
-if [[ "${WEBAPOLLO_DB_USERNAME}" == "" ]]; then
-	WEBAPOLLO_DB_USERNAME=apollo
-fi
-if [[ "${WEBAPOLLO_DB_PASSWORD}" == "" ]]; then
-	WEBAPOLLO_DB_PASSWORD=apollo
-fi
+WEBAPOLLO_DB_HOST="${WEBAPOLLO_DB_HOST:-127.0.0.1}"
+WEBAPOLLO_DB_NAME="${WEBAPOLLO_DB_NAME:-apollo}"
+WEBAPOLLO_DB_USERNAME="${WEBAPOLLO_DB_USERNAME:-apollo}"
+WEBAPOLLO_DB_PASSWORD="${WEBAPOLLO_DB_PASSWORD:-apollo}"
 WEBAPOLLO_HOST_FLAG="-h ${WEBAPOLLO_DB_HOST}"
 
-
-if [[ "${CHADO_DB_HOST}" == "" ]]; then
-	CHADO_DB_HOST=127.0.0.1
-fi
-if [[ "${CHADO_DB_NAME}" == "" ]]; then
-	CHADO_DB_NAME=chado
-fi
-if [[ "${CHADO_DB_USERNAME}" == "" ]]; then
-	CHADO_DB_USERNAME=apollo
-fi
-if [[ "${CHADO_DB_PASSWORD}" == "" ]]; then
-	CHADO_DB_PASSWORD=apollo
-fi
+CHADO_DB_HOST="${CHADO_DB_HOST:-127.0.0.1}"
+CHADO_DB_NAME="${CHADO_DB_NAME:-apollo}"
+CHADO_DB_USERNAME="${CHADO_DB_USERNAME:-apollo}"
+CHADO_DB_PASSWORD="${CHADO_DB_PASSWORD:-apollo}"
 CHADO_HOST_FLAG="-h ${CHADO_DB_HOST}"
 
-su postgres -c 'psql -f /apollo/user.sql'
 
 su postgres -c "psql -lqt | cut -d \| -f 1 | grep -qw $WEBAPOLLO_DB_NAME"
 if [[ "$?" == "1" ]]; then
@@ -53,11 +35,10 @@ fi
 su postgres -c "psql -lqt | cut -d \| -f 1 | grep -qw $CHADO_DB_NAME"
 if [[ "$?" == "1" ]]; then
 	echo "Chado database not found, creating..."
-    su postgres -c "createdb $CHADO_DB_NAME"
 	su postgres -c "createdb $CHADO_HOST_FLAG $CHADO_DB_NAME"
 	su postgres -c "psql $CHADO_HOST_FLAG -c \"CREATE USER $CHADO_DB_USERNAME WITH PASSWORD '$CHADO_DB_PASSWORD';\""
 	su postgres -c "psql $CHADO_HOST_FLAG -c 'GRANT ALL PRIVILEGES ON DATABASE \"$CHADO_DB_NAME\" to $CHADO_DB_USERNAME;'"
-	su postgres -c "PGPASSWORD=apollo psql -U $CHADO_DB_USERNAME -h ${CHADO_DB_HOST} $CHADO_DB_NAME -f /chado.sql"
+	su postgres -c "psql -U $CHADO_DB_USERNAME -h ${CHADO_DB_HOST} $CHADO_DB_NAME -f /chado.sql"
 fi
 
 
