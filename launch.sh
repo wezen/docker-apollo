@@ -14,14 +14,12 @@ WEBAPOLLO_HOST_FLAG="-h ${WEBAPOLLO_DB_HOST}"
 #USE_CHADO="${USE_CHADO:true}"
 
 CHADO_DB_HOST="${CHADO_DB_HOST:-127.0.0.1}"
-CHADO_DB_NAME="${CHADO_DB_NAME:-apollo}"
+CHADO_DB_NAME="${CHADO_DB_NAME:-chado}"
 CHADO_DB_USERNAME="${CHADO_DB_USERNAME:-apollo}"
 CHADO_DB_PASSWORD="${CHADO_DB_PASSWORD:-apollo}"
 CHADO_HOST_FLAG="-h ${CHADO_DB_HOST}"
 
 
-export PGUSER=$WEBAPOLLO_DB_USERNAME
-export PGPASSWORD=$WEBAPOLLO_DB_PASSWORD
 #export DB_CONNECT=$(echo $WEBAPOLLO_DB_URI | sed 's/jdbc://g')
 #while ! psql $DB_CONNECT -l; do
 #    echo "Sleeping on DB"
@@ -45,8 +43,6 @@ if [[ "$?" == "1" ]]; then
 fi
 
 echo "Configuring Chado"
-export PGUSER=$CHADO_DB_USERNAME
-export PGPASSWORD=$CHADO_DB_PASSWORD
 su postgres -c "psql -lqt | cut -d \| -f 1 | grep -qw $CHADO_DB_NAME"
 if [[ "$?" == "1" ]]; then
 	echo "Chado database not found, creating..."
@@ -56,6 +52,11 @@ if [[ "$?" == "1" ]]; then
 	su postgres -c "psql -U $CHADO_DB_USERNAME -h ${CHADO_DB_HOST} $CHADO_DB_NAME -f /chado.sql"
 fi
 
+
+#export PGUSER=$WEBAPOLLO_DB_USERNAME
+#export PGPASSWORD=$WEBAPOLLO_DB_PASSWORD
+#export PGUSER=$CHADO_DB_USERNAME
+#export PGPASSWORD=$CHADO_DB_PASSWORD
 
 # https://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Naming
 export CATALINA_HOME="${CATALINA_HOME:-/usr/local/tomcat/}"
