@@ -2,13 +2,11 @@
 service postgresql start
 
 
-echo "Postgres is up, loading chado"
-
 WEBAPOLLO_DB_HOST="${WEBAPOLLO_DB_HOST:-127.0.0.1}"
 WEBAPOLLO_DB_NAME="${WEBAPOLLO_DB_NAME:-apollo}"
 WEBAPOLLO_DB_USERNAME="${WEBAPOLLO_DB_USERNAME:-apollo}"
 WEBAPOLLO_DB_PASSWORD="${WEBAPOLLO_DB_PASSWORD:-apollo}"
-WEBAPOLLO_HOST_FLAG="-h ${WEBAPOLLO_DB_HOST}"
+
 
 # TODO: use variable throughout
 #USE_CHADO="${USE_CHADO:true}"
@@ -17,39 +15,43 @@ CHADO_DB_HOST="${CHADO_DB_HOST:-127.0.0.1}"
 CHADO_DB_NAME="${CHADO_DB_NAME:-chado}"
 CHADO_DB_USERNAME="${CHADO_DB_USERNAME:-apollo}"
 CHADO_DB_PASSWORD="${CHADO_DB_PASSWORD:-apollo}"
-CHADO_HOST_FLAG="-h ${CHADO_DB_HOST}"
 
+if [[ "${WEBAPOLLO_DB_HOST}" != "127.0.0.1" ]]; then
+    WEBAPOLLO_HOST_FLAG="-h ${WEBAPOLLO_DB_HOST}"
+fi
+if [[ "${CHADO_DB_HOST}" != "127.0.0.1" ]]; then
+    CHADO_HOST_FLAG="-h ${CHADO_DB_HOST}"
+fi
 
-#export DB_CONNECT=$(echo $WEBAPOLLO_DB_URI | sed 's/jdbc://g')
-#while ! psql $DB_CONNECT -l; do
-#    echo "Sleeping on DB"
-#    sleep 1;
-#done;
+echo "WEBAPOLLO_HOST_FLAG: $WEBAPOLLO_HOST_FLAG"
+echo "CHADO_HOST_FLAG: $CHADO_HOST_FLAG"
+
 echo "Waiting for DB"
-until pg_isready; do
+until pg_isready $WEBAPOLLO_HOST_FLAG; do
 	echo -n "."
 	sleep 1;
 done
 
 echo "Postgres is up, configuring database"
 
-
-su postgres -c "psql -lqt | cut -d \| -f 1 | grep -qw $WEBAPOLLO_DB_NAME"
+su postgres -c "psql $WEBAPOLLO_HOST_FLAG -lqt | cut -d \| -f 1 | grep -qw $WEBAPOLLO_DB_NAME"
 if [[ "$?" == "1" ]]; then
 	echo "Apollo database not found, creating..."
 	su postgres -c "createdb $WEBAPOLLO_HOST_FLAG $WEBAPOLLO_DB_NAME"
 	su postgres -c "psql $WEBAPOLLO_HOST_FLAG -c \"CREATE USER $WEBAPOLLO_DB_USERNAME WITH PASSWORD '$WEBAPOLLO_DB_PASSWORD';\""
-	su postgres -c "psql $WEBAPOLLO_HOST_FLAG -c 'GRANT ALL PRIVILEGES ON DATABASE \"$WEBAPOLLO_DB_NAME\" to $WEBAPOLLO_DB_USERNAME;'"
+	su postgres -c "psql $WEBAPOLLO_HOST_FLAG -c \"GRANT ALL PRIVILEGES ON DATABASE $WEBAPOLLO_DB_NAME to $WEBAPOLLO_DB_USERNAME;\""
 fi
 
 echo "Configuring Chado"
-su postgres -c "psql -lqt | cut -d \| -f 1 | grep -qw $CHADO_DB_NAME"
+su postgres -c "psql $CHADO_HOST_FLAG -lqt | cut -d \| -f 1 | grep -qw $CHADO_DB_NAME"
 if [[ "$?" == "1" ]]; then
 	echo "Chado database not found, creating..."
 	su postgres -c "createdb $CHADO_HOST_FLAG $CHADO_DB_NAME"
 	su postgres -c "psql $CHADO_HOST_FLAG -c \"CREATE USER $CHADO_DB_USERNAME WITH PASSWORD '$CHADO_DB_PASSWORD';\""
 	su postgres -c "psql $CHADO_HOST_FLAG -c 'GRANT ALL PRIVILEGES ON DATABASE \"$CHADO_DB_NAME\" to $CHADO_DB_USERNAME;'"
-	su postgres -c "psql -U $CHADO_DB_USERNAME -h ${CHADO_DB_HOST} $CHADO_DB_NAME -f /chado.sql"
+    echo "Loading Chado"
+	su postgres -c "PGPASSWORD=$CHADO_DB_PASSWORD psql -U $CHADO_DB_USERNAME -h $CHADO_DB_HOST $CHADO_DB_NAME -f /chado.sql"
+    echo "Loaded Chado Chado"
 fi
 
 
