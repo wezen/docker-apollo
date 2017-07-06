@@ -54,12 +54,6 @@ if [[ "$?" == "1" ]]; then
     echo "Loaded Chado"
 fi
 
-
-#export PGUSER=$WEBAPOLLO_DB_USERNAME
-#export PGPASSWORD=$WEBAPOLLO_DB_PASSWORD
-#export PGUSER=$CHADO_DB_USERNAME
-#export PGPASSWORD=$CHADO_DB_PASSWORD
-
 # https://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Naming
 export CATALINA_HOME="${CATALINA_HOME:-/usr/local/tomcat/}"
 FIXED_CTX=$(echo "${CONTEXT_PATH}" | sed 's|/|#|g')

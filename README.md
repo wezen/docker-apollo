@@ -40,7 +40,7 @@ Choose an option:
 - To run in production against JBrowse data and a persistent database (you can create an empty directory called `postgres-data`):  
     - `docker run -it -v /jbrowse/root/directory/:/data -v postgres-data:/var/lib/postgresql -p 8888:8080 gmod/apollo:latest`
 
-- You can run production using the build created by quay.io (https://quay.io/repository/gmod/docker-apollo):
+- You can run production using the build created by quay.io instead (https://quay.io/repository/gmod/docker-apollo):
     - `docker run -it -v /jbrowse/root/directory/:/data -v postgres-data:/var/lib/postgresql  -v postgres-data:/var/lib/postgresql -p 8888:8080 quay.io/gmod/docker-apollo:latest`
     
 In all cases, Apollo will be available at [http://localhost:8888/](http://localhost:8888/) (or 8888 if you don't configure the port)
@@ -48,6 +48,9 @@ In all cases, Apollo will be available at [http://localhost:8888/](http://localh
 When you use the above mount directory ```/jbrowse/root/directory``` and your genome is in 
 ```/jbrowse/root/directory/myawesomegenome``` you'll point to the directory: ```/data/myawesomegenome```.
 
+NOTE: If you don't use a locally mounted PostgreSQL database (e.g., creating an empty directory and mounting using `-v postgres-data:/var/lib/postgresql`)
+or [set appropriate environment variables](https://docs.docker.com/engine/reference/commandline/run/) for a remote database 
+( see variables [defined here](https://github.com/GMOD/docker-apollo/blob/master/launch.sh)) your annotations and setup will not be persisted.
 
 ### Logging In
 
