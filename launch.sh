@@ -51,7 +51,7 @@ if [[ "$?" == "1" ]]; then
 	su postgres -c "psql $CHADO_HOST_FLAG -c 'GRANT ALL PRIVILEGES ON DATABASE \"$CHADO_DB_NAME\" to $CHADO_DB_USERNAME;'"
     echo "Loading Chado"
 	su postgres -c "PGPASSWORD=$CHADO_DB_PASSWORD psql -U $CHADO_DB_USERNAME -h $CHADO_DB_HOST $CHADO_DB_NAME -f /chado.sql"
-    echo "Loaded Chado Chado"
+    echo "Loaded Chado"
 fi
 
 
