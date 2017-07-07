@@ -11,6 +11,6 @@ RUN apk update && \
 	sed -i 's|bin/cpanm|bin/cpanm --no-wget|g' setup.sh && \
 	./bin/cpanm local::lib --no-wget && \
 	bash setup.sh && \
-	apk remove make gcc perl-dev musl-dev db-dev
+	apk del make gcc perl-dev musl-dev db-dev
 
 ADD launch.sh /launch.sh
