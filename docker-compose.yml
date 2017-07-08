@@ -8,4 +8,3 @@ services:
       CONTEXT_PATH: ROOT
     volumes:
       - "./data:/data"
-
