@@ -7,41 +7,21 @@ WAR_FILE=${CATALINA_HOME}/webapps/${FIXED_CTX}.war
 rm -rf ${CATALINA_HOME}/webapps/*
 cp /apollo/apollo.war ${WAR_FILE}
 
-# Launch postgres
-apk add sudo postgresql
+# Start the (pre-filled) database
+sudo -u postgres pg_ctl start -D /var/lib/postgres/data;
+while ! pg_isready; do sleep 1; done;
 
-mkdir -p "/var/lib/postgres/data"
-chown -R postgres "/var/lib/postgres/data"
-chmod 700 "/var/lib/postgres/data"
-
-mkdir -p /run/postgresql
-chown -R postgres /run/postgresql
-chmod 775 /run/postgresql
-
-# Initialize Database
-echo 'postgres' > /tmp/pgpass;
-sudo -u postgres initdb --username=postgres -D /var/lib/postgres/data --auth-host=md5 --pwfile=/tmp/pgpass
-sleep 5;
-rm -f /tmp/pgpass
-sudo -u postgres pg_ctl start -D /var/lib/postgres/data
-
-# Wait for DB to be up
-while ! pg_isready; do
-	echo "Sleeping on database"
-	sleep 1;
-done;
-
-# Now that it is, create the databases.
-echo "Postgres is up, preparing apollo and chado databases"
-# These *must* be executed with sudo
-sudo -u postgres createdb apollo -O postgres
-sudo -u postgres createdb chado -O postgres
-
-# Load Chado schema
-export PGUSER=postgres
+echo 'export PGUSER=postgres
 export PGPASSWORD=postgres
 export PGHOSTADDR=127.0.0.1
 export PGPORT=5432
-psql chado -f /chado.sql
+export WEBAPOLLO_DB_USERNAME=postgres
+export WEBAPOLLO_DB_PASSWORD=postgres
+export WEBAPOLLO_DB_URI="jdbc:postgresql://127.0.0.1:5432/apollo"
+export WEBAPOLLO_CHADO_DB_USERNAME=postgres
+export WEBAPOLLO_CHADO_DB_PASSWORD=postgres
+export WEBAPOLLO_CHADO_DB_URI="jdbc:postgresql://127.0.0.1:5432/chado"
+' > $CATALINA_HOME/bin/setenv.sh
+chmod +x $CATALINA_HOME/bin/setenv.sh;
 
 catalina.sh run
