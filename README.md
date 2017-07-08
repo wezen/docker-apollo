@@ -8,14 +8,6 @@
 > different locations; real-time updating keeps all users in sync during the
 > editing process.
 
-## Running the Container
-
-The container is publicly available as `quay.io/gmod/docker-apollo`.
-
-There are a large number of environment variables that can be adjusted to suit your site's needs.
-These can be seen in the [apollo-config.groovy](https://github.com/GMOD/docker-apollo/blob/bare/apollo-config.groovy)
-file.
-
 ## Quickstart
 
 If you've never used docker before, first you will need to [install it](https://docs.docker.com/engine/installation/).
