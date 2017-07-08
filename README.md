@@ -1,6 +1,6 @@
-![Apollo Logo](img/ApolloLogo_100x36.png)
 
-# Apollo [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.268535.svg)](https://doi.org/10.5281/zenodo.268535) [![Docker Repository on Quay](https://quay.io/repository/gmod/docker-apollo/status "Docker Repository on Quay")](https://quay.io/repository/gmod/docker-apollo)
+
+# ![Apollo](img/ApolloLogo_100x36.png) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.268535.svg)](https://doi.org/10.5281/zenodo.268535) [![Docker Repository on Quay](https://quay.io/repository/gmod/docker-apollo/status "Docker Repository on Quay")](https://quay.io/repository/gmod/docker-apollo)
 
 > Apollo is a browser-based tool for visualisation and editing of sequence
 > annotations. It is designed for distributed community annotation efforts,
