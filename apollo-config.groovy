@@ -6,12 +6,12 @@ environments {
     production {
         dataSource {
             dbCreate = "update"
-            username = System.getenv("WEBAPOLLO_DB_USERNAME") ?: "apollo"
-            password = System.getenv("WEBAPOLLO_DB_PASSWORD") ?: "apollo"
+            username = "postgres"
+            password = "postgres"
 
             driverClassName = "org.postgresql.Driver"
             dialect = "org.hibernate.dialect.PostgresPlusDialect"
-            url = System.getenv("WEBAPOLLO_DB_URI") ?: "jdbc:postgresql://127.0.0.1/apollo"
+            url = "jdbc:postgresql://127.0.0.1:5432/apollo"
 
             properties {
                 // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
@@ -36,12 +36,12 @@ environments {
         }
         dataSource_chado {
             dbCreate = "update"
-            username = "apollo"
-            password = "apollo"
+            username = "postgres"
+            password = "postgres"
 
             driverClassName = "org.postgresql.Driver"
             dialect = "org.hibernate.dialect.PostgresPlusDialect"
-            url = "jdbc:postgresql://127.0.0.1/chado"
+            url = "jdbc:postgresql://127.0.0.1:5432/chado"
 
             properties {
                 // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
