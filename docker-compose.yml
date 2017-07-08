@@ -1,7 +1,7 @@
 version: '2'
 services:
   apollo:
-    image: quay.io/erasche/apollo:alpine
+    image: quay.io/gmod/docker-apollo:bare
     links:
       - db
       - chado
@@ -11,13 +11,9 @@ services:
       CONTEXT_PATH: ROOT
       WEBAPOLLO_DB_USERNAME: postgres
       WEBAPOLLO_DB_PASSWORD: password
-      WEBAPOLLO_DB_DRIVER: "org.postgresql.Driver"
-      WEBAPOLLO_DB_DIALECT: "org.hibernate.dialect.PostgresPlusDialect"
       WEBAPOLLO_DB_URI: "jdbc:postgresql://db:5432/postgres"
       WEBAPOLLO_CHADO_DB_USERNAME: postgres
       WEBAPOLLO_CHADO_DB_PASSWORD: password
-      WEBAPOLLO_CHADO_DB_DRIVER: "org.postgresql.Driver"
-      WEBAPOLLO_CHADO_DB_DIALECT: "org.hibernate.dialect.PostgresPlusDialect"
       WEBAPOLLO_CHADO_DB_URI: "jdbc:postgresql://chado:5432/postgres"
     volumes:
       - "./data:/data"
