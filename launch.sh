@@ -1,29 +1,28 @@
-#!/usr/bin/env bash
-service postgresql start 
-
-
-
-#!/bin/bash
-until pg_isready; do
-	echo -n "."
-	sleep 1;
-done
-
-echo "Postgres is up, loading chado"
-su postgres -c 'createdb apollo'
-su postgres -c 'createdb chado'
-su postgres -c 'psql -f /apollo/user.sql'
-
-su postgres -c 'PGPASSWORD=apollo psql -U apollo -h 127.0.0.1 chado -f /chado.sql'
-
+#!/bin/sh
 # https://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Naming
-export CATALINA_HOME=/usr/local/tomcat/
+service postgresql start;
 FIXED_CTX=$(echo "${CONTEXT_PATH}" | sed 's|/|#|g')
 WAR_FILE=${CATALINA_HOME}/webapps/${FIXED_CTX}.war
 
-echo "Starting tomcat with $CATALINA_HOME"
-$CATALINA_HOME/bin/shutdown.sh
-$CATALINA_HOME/bin/startup.sh
+rm -rf ${CATALINA_HOME}/webapps/*
 
-cp ${CATALINA_HOME}/apollo.war ${WAR_FILE}
-tail -f ${CATALINA_HOME}/logs/catalina.out 
+cp /apollo/apollo.war ${WAR_FILE}
+if [ ! -z "$WEBAPOLLO_DB_HOST" ]; then
+	export PGUSER=$WEBAPOLLO_DB_USERNAME
+	export PGPASSWORD=$WEBAPOLLO_DB_PASSWORD
+	export DB_CONNECT=$(echo $WEBAPOLLO_DB_URI | sed 's/jdbc://g')
+	while ! psql $DB_CONNECT -l; do
+		echo "Sleeping on DB"
+		sleep 1;
+	done;
+
+	export PGUSER=$WEBAPOLLO_CHADO_DB_USERNAME
+	export PGPASSWORD=$WEBAPOLLO_CHADO_DB_PASSWORD
+	export DB_CONNECT=$(echo $WEBAPOLLO_CHADO_DB_URI | sed 's/jdbc://g')
+	while ! psql $DB_CONNECT -l; do
+		echo "Sleeping on Chado DB"
+		sleep 1;
+	done;
+fi
+
+catalina.sh run
