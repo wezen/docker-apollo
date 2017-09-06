@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get -qq update --fix-missing && \
 	apt-get --no-install-recommends -y install \
 	git build-essential maven tomcat8 libpq-dev postgresql-common openjdk-8-jdk wget \
-	postgresql postgresql-client xmlstarlet netcat libpng12-dev \
+	postgresql postgresql-client xmlstarlet netcat libpng12-0 libpng12-dev \
 	zlib1g-dev libexpat1-dev ant curl ssl-cert
 
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
