@@ -18,7 +18,7 @@ RUN apt-get -qq update --fix-missing && \
 RUN cp /usr/lib/jvm/java-8-openjdk-amd64/lib/tools.jar /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/tools.jar && \
 	useradd -ms /bin/bash -d /apollo apollo
 
-ENV WEBAPOLLO_VERSION 73d45abbeaacaccd17ffe957c332b632aaa97f62
+ENV WEBAPOLLO_VERSION 046a6de768a1fcff3aa21055ff01209964b5bc58
 RUN curl -L https://github.com/GMOD/Apollo/archive/${WEBAPOLLO_VERSION}.tar.gz | tar xzf - --strip-components=1 -C /apollo
 
 
